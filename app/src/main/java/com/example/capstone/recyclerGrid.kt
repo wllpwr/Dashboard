@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import android.content.Context
+import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,21 @@ import android.view.ViewGroup
 import android.webkit.WebView
 
 
+
 class RecyclerGrid(var context: Context) : RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
-    var dataList = emptyList<DataModel>()
+    var dataList = emptyList<String>()
 
-    internal fun setDataList(dataList: List<DataModel>) {
+    fun moveItem(from: Int, to: Int) {
+        var fromWidget = dataList[from]
+        var toWidget = dataList[to]
+        val tempFromWidget = dataList[from]
+
+        fromWidget = toWidget
+        toWidget = tempFromWidget
+    }
+
+    internal fun setDataList(dataList: List<String>) {
         this.dataList = dataList
     }
 
@@ -40,7 +51,7 @@ class RecyclerGrid(var context: Context) : RecyclerView.Adapter<RecyclerGrid.Vie
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
-        holder.webView.loadData(data.html, "text/html", "base64")
+        holder.webView.loadData(data, "text/html", "base64")
     }
 
     override fun getItemCount() = dataList.size
