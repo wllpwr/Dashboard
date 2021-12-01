@@ -5,25 +5,50 @@ import androidx.lifecycle.ViewModel
 
 class WidgetViewModel : ViewModel() {
     private val unencodedWidget1 = "<html>\n" +
-            "  <head>\n" +
-            "    <title>Time</title>\n" +
-            "  </head>\n" +
-            "  <body>\n" +
-            "    <p>Current Time</p>\n" +
-            "    <p id=\"timespot\">00:00</p>\n" +
-            "\n" +
-            "\n" +
-            "    <script>\n" +
-            "      \n" +
-            "      window.onload = function() { setInterval(timeNow, 400); }\n" +
-            "\n" +
-            "      function timeNow(){\n" +
-            "        var timeElement = document.getElementById(\"timespot\");\n" +
-            "        let currentDate = new Date();\n" +
-            "        var time = currentDate.getHours() + \":\" + currentDate.getMinutes() + \":\" + currentDate.getSeconds();\n" +
-            "        timeElement.textContent = time\n" +
-            "        console.log(time);\n" +
+            "  <style>\n" +
+            "      body {\n" +
+            "        background-color:black\n" +
             "      }\n" +
+            "\n" +
+            "      div {\n" +
+            "        color:white;\n" +
+            "        font-size: xx-large;\n" +
+            "        font-family: Arial, Helvetica, sans-serif;\n" +
+            "        position: absolute;\n" +
+            "        top:  50%;\n" +
+            "        left: 50%;\n" +
+            "        transform: translate(-50%,-50%);\n" +
+            "      }\n" +
+            "  </style>\n" +
+            "  <body>\n" +
+            "    <div id=\"timespot\"></div>\n" +
+            "    <script>\n" +
+            "        window.onload = function() { setInterval(timeNow, 400); }\n" +
+            "        \n" +
+            "        function addZero(i) {\n" +
+            "            if (i < 10) {i = \"0\" + i}\n" +
+            "            return i;\n" +
+            "        }\n" +
+            "\n" +
+            "        function convertTime(i) {\n" +
+            "            if (i > 12) {\n" +
+            "                i = i - 12\n" +
+            "            } else if (i == 0) {\n" +
+            "                i = 12\n" +
+            "            }\n" +
+            "            return i;\n" +
+            "        }\n" +
+            "        \n" +
+            "        function timeNow() {\n" +
+            "            var timeElement = document.getElementById(\"timespot\");\n" +
+            "            const d = new Date();\n" +
+            "            let h = convertTime(d.getHours());\n" +
+            "            let m = addZero(d.getMinutes());\n" +
+            "            let s = addZero(d.getSeconds());\n" +
+            "            let time = h + \":\" + m + \":\" + s;\n" +
+            "            timeElement.textContent = time;\n" +
+            "            console.log(time);\n" +
+            "        }\n" +
             "    </script> \n" +
             "  </body>\n" +
             "</html>"
