@@ -74,10 +74,10 @@ class MainActivity : AppCompatActivity() {
 
         dataList.add(widgetViewModel.encodedWidget1)
         dataList.add(widgetViewModel.encodedWidget2)
-        dataList.add(widgetViewModel.encodedWidget2)
-        dataList.add(widgetViewModel.encodedWidget2)
-        dataList.add(widgetViewModel.encodedWidget2)
-        dataList.add(widgetViewModel.encodedWidget2)
+        dataList.add(widgetViewModel.encodedWidget3)
+        dataList.add(widgetViewModel.encodedWidget1)
+        dataList.add(widgetViewModel.encodedWidget1)
+        dataList.add(widgetViewModel.encodedWidget1)
 
         recyclerGridAdapter.setDataList(dataList)
     }

@@ -102,6 +102,67 @@ class WidgetViewModel : ViewModel() {
             "\n" +
             "</html>"
 
+    val unencodedWidget3 = "<html>\n" +
+            "\n" +
+            "<head>\n" +
+            "  <title>Weather</title>\n" +
+            "</head>\n" +
+            "<style>\n" +
+            "    body {\n" +
+            "      background-color:black\n" +
+            "    }\n" +
+            "\n" +
+            "    #temp {\n" +
+            "        color:white;\n" +
+            "        font-size: xx-large;\n" +
+            "        font-family: Arial, Helvetica, sans-serif;\n" +
+            "        position: absolute;\n" +
+            "        top:  50%;\n" +
+            "        left: 50%;\n" +
+            "        transform: translate(-50%,-50%);\n" +
+            "    }\n" +
+            "\n" +
+            "    #location {\n" +
+            "      color:white;\n" +
+            "      font-size: large;\n" +
+            "      font-family: Arial, Helvetica, sans-serif;\n" +
+            "      position: absolute;\n" +
+            "      top:  50%;\n" +
+            "      left: 50%;\n" +
+            "      transform: translate(-50%,50%);\n" +
+            "      white-space: nowrap;\n" +
+            "    }\n" +
+            "</style>\n" +
+            "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js\"></script>\n" +
+            "<script>\n" +
+            "\n" +
+            "  var city = \"5243081\";\n" +
+            "  var apiKey = \"d0e0ee9c992e0c35187450ad00b56957\";\n" +
+            "  \n" +
+            "  fetch(\n" +
+            "    \"https://api.openweathermap.org/data/2.5/weather?id=\" +\n" +
+            "    city +\n" +
+            "    \"&units=imperial&appid=\" +\n" +
+            "    apiKey\n" +
+            "    )\n" +
+            "    .then(response => response.json())\n" +
+            "    .then (data => {\n" +
+            "      var temp = document.getElementById(\"temp\");\n" +
+            "      data= JSON.stringify(data);\n" +
+            "      var obj = JSON.parse(data);\n" +
+            "      console.log(obj.main.temp);\n" +
+            "      temp.textContent = obj.main.temp + \"°F\";\n" +
+            "  })\n" +
+            "</script>\n" +
+            "\n" +
+            "<body>\n" +
+            "  <div id=\"temp\">N/A</div>\n" +
+            "  <div id=\"location\">Winooski, VT</div>\n" +
+            "</body>\n" +
+            "\n" +
+            "</html>\n"
+
     val encodedWidget1: String = Base64.encodeToString(unencodedWidget1.toByteArray(), Base64.NO_PADDING)
     val encodedWidget2: String = Base64.encodeToString(unencodedWidget2.toByteArray(), Base64.NO_PADDING)
+    val encodedWidget3: String = Base64.encodeToString(unencodedWidget3.toByteArray(), Base64.NO_PADDING)
 }
