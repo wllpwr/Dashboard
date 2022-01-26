@@ -1,7 +1,10 @@
 package com.example.capstone
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -66,6 +69,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // assigning ID of the toolbar to a variable
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        toolbar.setTitleTextColor(Color.WHITE)
+        // using toolbar as ActionBar
+        setSupportActionBar(toolbar)
 
         recyclerView.layoutManager = GridLayoutManager(applicationContext,2)
         recyclerGridAdapter = RecyclerGrid(applicationContext)

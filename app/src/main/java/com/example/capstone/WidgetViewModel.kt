@@ -18,6 +18,8 @@ class WidgetViewModel : ViewModel() {
             "        top:  50%;\n" +
             "        left: 50%;\n" +
             "        transform: translate(-50%,-50%);\n" +
+            "        -webkit-user-select: none;\n" +
+            "        user-select: none\n" +
             "      }\n" +
             "  </style>\n" +
             "  <body>\n" +
@@ -120,17 +122,20 @@ class WidgetViewModel : ViewModel() {
             "        top:  50%;\n" +
             "        left: 50%;\n" +
             "        transform: translate(-50%,-50%);\n" +
+            "        -webkit-user-select: none;\n" +
+            "        user-select: none\n" +
             "    }\n" +
             "\n" +
             "    #location {\n" +
             "      color:white;\n" +
-            "      font-size: large;\n" +
+            "      font-size: small;\n" +
             "      font-family: Arial, Helvetica, sans-serif;\n" +
             "      position: absolute;\n" +
             "      top:  50%;\n" +
             "      left: 50%;\n" +
             "      transform: translate(-50%,50%);\n" +
-            "      white-space: nowrap;\n" +
+            "      -webkit-user-select: none;\n" +
+            "      user-select: none\n" +
             "    }\n" +
             "</style>\n" +
             "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js\"></script>\n" +

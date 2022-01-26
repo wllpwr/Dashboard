@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Capstone</string>
+    <string name="add_button">Add Widget</string>
+    <string name="settings_button">App Settings</string>
 </resources>
