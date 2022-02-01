@@ -28,7 +28,7 @@ class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
     fun deleteItem(index: Int) {
         dataList.removeAt(index)
-        notifyDataSetChanged()
+        notifyItemChanged(index)
     }
 
     fun addWidget(widget: String) {

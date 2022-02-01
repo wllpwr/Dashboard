@@ -10,7 +10,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         val swipedDelete = object : SwipeToDelete() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                Log.d("testing", "test")
                 recyclerGridAdapter.deleteItem(viewHolder.adapterPosition)
             }
         }
@@ -60,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                Log.d("testing", "test2")
                 val adapter = recyclerView.adapter as RecyclerGrid
                 val from = viewHolder.adapterPosition
                 val to = target.adapterPosition
