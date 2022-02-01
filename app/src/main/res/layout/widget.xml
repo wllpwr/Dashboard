@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    android:background="@drawable/widgetborder"
+    android:background="@drawable/widget_border"
     android:orientation="vertical"
     tools:layout_editor_absoluteX="5dp"
     tools:layout_editor_absoluteY="5dp">
 
     <WebView
-        android:id="@+id/webview"
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

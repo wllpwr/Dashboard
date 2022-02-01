@@ -1,7 +1,6 @@
 package com.example.capstone
 
-import android.content.Context
-import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,9 @@ import android.webkit.WebView
 
 
 
-class RecyclerGrid(var context: Context) : RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
+class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
-    var dataList = emptyList<String>()
+    private var dataList = ArrayList<String>()
 
     fun moveItem(from: Int, to: Int) {
         var fromWidget = dataList[from]
@@ -23,17 +22,27 @@ class RecyclerGrid(var context: Context) : RecyclerView.Adapter<RecyclerGrid.Vie
         toWidget = tempFromWidget
     }
 
-    internal fun setDataList(dataList: List<String>) {
+    internal fun setDataList(dataList: ArrayList<String>) {
         this.dataList = dataList
     }
 
+    fun deleteItem(index: Int) {
+        dataList.removeAt(index)
+        notifyDataSetChanged()
+    }
+
+    fun addWidget(widget: String) {
+        dataList.add(widget)
+        notifyItemChanged(dataList.size)
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var webView: WebView = itemView.findViewById(R.id.webview)
+        var webView: WebView = itemView.findViewById(R.id.web_view)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.widget, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.widget, parent, false)
 
         //https://stackoverflow.com/questions/35221566/how-to-set-the-height-of-an-item-row-in-gridlayoutmanager
         view.post {
@@ -47,7 +56,7 @@ class RecyclerGrid(var context: Context) : RecyclerView.Adapter<RecyclerGrid.Vie
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         // Get the data model based on position
-        var data = dataList[position]
+        val data = dataList[position]
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true

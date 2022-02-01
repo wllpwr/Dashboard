@@ -1,10 +1,12 @@
 package com.example.capstone
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.ContextMenu
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
-import androidx.appcompat.widget.Toolbar
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -19,67 +21,60 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var  recyclerGridAdapter: RecyclerGrid
     private val widgetViewModel: WidgetViewModel by viewModels()
-    private var dataList = mutableListOf<String>()
+    private var dataList = ArrayList<String>()
 
-    // https://yfujiki.medium.com/drag-and-reorder-recyclerview-items-in-a-user-friendly-manner-1282335141e9
-    // https://github.com/yfujiki/Android-DragReorderSample/blob/master/app/src/main/java/com/yfujiki/android_dragreordersample/MainActivity.kt
-    private val itemTouchHelper by lazy {
-        val simpleItemTouchCallback =
-            object : ItemTouchHelper.SimpleCallback(
-                ItemTouchHelper.UP or
-                        ItemTouchHelper.DOWN or
-                        ItemTouchHelper.START or
-                        ItemTouchHelper.END, 0) {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.core_menu, menu)
+        return true
+    }
 
-                override fun onMove(recyclerView: RecyclerView,
-                                    viewHolder: RecyclerView.ViewHolder,
-                                    target: RecyclerView.ViewHolder): Boolean {
-
-                    val adapter = recyclerView.adapter as RecyclerGrid
-                    val from = viewHolder.adapterPosition
-                    val to = target.adapterPosition
-
-                    adapter.moveItem(from, to)
-
-                    adapter.notifyItemMoved(from, to)
-
-                    return true
-                }
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder,
-                                      direction: Int) {
-                }
-
-                override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                    super.onSelectedChanged(viewHolder, actionState)
-
-                    if (actionState == ACTION_STATE_DRAG) {
-                        viewHolder?.itemView?.alpha = 0.5f
-                    }
-                }
-
-                override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-                    super.clearView(recyclerView, viewHolder)
-
-                    viewHolder.itemView.alpha = 1.0f
-                }
-            }
-        ItemTouchHelper(simpleItemTouchCallback)
+    override fun onCreateContextMenu(menu: ContextMenu, v: View,
+                                     menuInfo: ContextMenu.ContextMenuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.widget_menu, menu)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // assigning ID of the toolbar to a variable
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        toolbar.setTitleTextColor(Color.WHITE)
-        // using toolbar as ActionBar
-        setSupportActionBar(toolbar)
-
         recyclerView.layoutManager = GridLayoutManager(applicationContext,2)
-        recyclerGridAdapter = RecyclerGrid(applicationContext)
+        recyclerGridAdapter = RecyclerGrid()
         recyclerView.adapter = recyclerGridAdapter
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        val swipedDelete = object : SwipeToDelete() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Log.d("testing", "test")
+                recyclerGridAdapter.deleteItem(viewHolder.adapterPosition)
+            }
+        }
+
+        val swipeHelper = ItemTouchHelper(swipedDelete)
+        swipeHelper.attachToRecyclerView(recyclerView)
+
+        val dragWidgets = object : DragToMoveWidgets() {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                Log.d("testing", "test2")
+                val adapter = recyclerView.adapter as RecyclerGrid
+                val from = viewHolder.adapterPosition
+                val to = target.adapterPosition
+
+                adapter.moveItem(from, to)
+
+                adapter.notifyItemMoved(from, to)
+
+                return true
+            }
+        }
+
+        val dragHelper = ItemTouchHelper(dragWidgets)
+        dragHelper.attachToRecyclerView(recyclerView)
 
         dataList.add(widgetViewModel.encodedWidget1)
         dataList.add(widgetViewModel.encodedWidget2)
