@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment2">
+    <fragment
+        android:id="@+id/addWidgetFragment"
+        android:name="com.example.capstone.AddWidgetFragment"
+        android:label="fragment_add_widget"
+        tools:layout="@layout/fragment_add_widget" />
+    <fragment
+        android:id="@+id/dashboardFragment2"
+        android:name="com.example.capstone.DashboardFragment"
+        android:label="DashboardFragment" >
+        <action
+            android:id="@+id/action_dashboardFragment2_to_addWidgetFragment"
+            app:destination="@id/addWidgetFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment2_to_appSettingsFragment"
+            app:destination="@id/appSettingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appSettingsFragment"
+        android:name="com.example.capstone.AppSettingsFragment"
+        android:label="fragment_app_settings"
+        tools:layout="@layout/fragment_app_settings" />
+</navigation>
