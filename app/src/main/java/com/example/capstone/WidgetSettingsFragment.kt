@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-class AddWidgetFragment : Fragment() {
+class WidgetSettingsFragment : Fragment() {
 
     private lateinit var recycler: RecyclerView
     private lateinit var addWidgetRecycler: AddWidgetRecycler
@@ -23,9 +23,9 @@ class AddWidgetFragment : Fragment() {
         recycler = view.findViewById(R.id.recyclerView)
         recycler.layoutManager = LinearLayoutManager(context)
 
-        val widgetList = arrayOf("Weather Widget", "Time Widget", "News Widget", "Finance Widget")
+        val widgetSettings = arrayOf("Location", "C° or F°", "Theme", "Font", "Font Size")
 
-        addWidgetRecycler = AddWidgetRecycler(widgetList)
+        addWidgetRecycler = AddWidgetRecycler(widgetSettings)
         recycler.adapter = addWidgetRecycler
 
         return view
