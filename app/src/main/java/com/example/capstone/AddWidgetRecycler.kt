@@ -5,16 +5,20 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 
-class AddWidgetRecycler(private val dataSet: Array<String>) :
+class AddWidgetRecycler(private val dataSet: Array<String>, private val dataIconSet: Array<Int>) :
     RecyclerView.Adapter<AddWidgetRecycler.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView
+        val textView: TextView = view.findViewById(R.id.textView)
 
         init {
             // Define click listener for the ViewHolder's View.
-            textView = view.findViewById(R.id.textView)
+            view.setOnClickListener {
+                view.findNavController()
+                    .navigate(R.id.action_addWidgetFragment_to_widgetSettingsFragment)
+            }
         }
     }
 
@@ -33,6 +37,7 @@ class AddWidgetRecycler(private val dataSet: Array<String>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.textView.text = dataSet[position]
+        viewHolder.textView.setCompoundDrawablesRelativeWithIntrinsicBounds(dataIconSet[position], 0,0 ,0)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
