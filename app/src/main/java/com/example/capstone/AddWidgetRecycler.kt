@@ -12,14 +12,6 @@ class AddWidgetRecycler(private val dataSet: Array<String>, private val dataIcon
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.textView)
-
-        init {
-            // Define click listener for the ViewHolder's View.
-            view.setOnClickListener {
-                view.findNavController()
-                    .navigate(R.id.action_addWidgetFragment_to_widgetSettingsFragment)
-            }
-        }
     }
 
     // Create new views (invoked by the layout manager)
@@ -38,6 +30,16 @@ class AddWidgetRecycler(private val dataSet: Array<String>, private val dataIcon
         // contents of the view with that element
         viewHolder.textView.text = dataSet[position]
         viewHolder.textView.setCompoundDrawablesRelativeWithIntrinsicBounds(dataIconSet[position], 0,0 ,0)
+
+        val widgetClicked = viewHolder.textView.text
+
+        val action = AddWidgetFragmentDirections.actionAddWidgetFragmentToWidgetSettingsFragment(widgetClicked.toString())
+
+        // Define click listener for the textView.
+        viewHolder.textView.setOnClickListener {
+            viewHolder.textView.findNavController()
+                .navigate(action)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

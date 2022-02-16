@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -40,6 +41,7 @@ dependencies {
     // Feature module Support
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.4.1")
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.webkit:webkit:1.4.0'
 
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:2.4.1")

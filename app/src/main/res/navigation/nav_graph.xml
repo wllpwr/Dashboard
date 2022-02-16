@@ -12,6 +12,7 @@
         <action
             android:id="@+id/action_addWidgetFragment_to_widgetSettingsFragment"
             app:destination="@id/widgetSettingsFragment" />
+        <argument android:name="viewModel" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment2"
@@ -33,5 +34,12 @@
         android:id="@+id/widgetSettingsFragment"
         android:name="com.example.capstone.WidgetSettingsFragment"
         android:label="fragment_widget_settings"
-        tools:layout="@layout/fragment_widget_settings" />
+        tools:layout="@layout/fragment_widget_settings" >
+        <argument
+            android:name="widget_type"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_widgetSettingsFragment_to_dashboardFragment2"
+            app:destination="@id/dashboardFragment2" />
+    </fragment>
 </navigation>

@@ -4,13 +4,26 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
-
+import androidx.webkit.WebViewAssetLoader
+import androidx.webkit.WebViewClientCompat
 
 
 class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
     private var dataList = ArrayList<String>()
+
+    private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClientCompat() {
+        //@RequiresApi(21)
+        override fun shouldInterceptRequest(
+            view: WebView,
+            request: WebResourceRequest
+        ): WebResourceResponse? {
+            return assetLoader.shouldInterceptRequest(request.url)
+        }
+    }
 
     fun moveItem(from: Int, to: Int) {
         var fromWidget = dataList[from]
@@ -27,13 +40,15 @@ class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
     fun deleteItem(index: Int) {
         dataList.removeAt(index)
-        notifyItemChanged(index)
+        notifyDataSetChanged() // crashes with position update???
     }
 
+    /*
     fun addWidget(widget: String) {
         dataList.add(widget)
         notifyItemChanged(dataList.size)
     }
+     */
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var webView: WebView = itemView.findViewById(R.id.web_view)
@@ -53,13 +68,18 @@ class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         // Get the data model based on position
         val data = dataList[position]
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
-        holder.webView.loadData(data, "text/html", "base64")
+
+        val assetLoader = WebViewAssetLoader.Builder()
+            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(holder.webView.context))
+            .build()
+        holder.webView.webViewClient = LocalContentWebViewClient(assetLoader)
+
+        holder.webView.loadUrl(data)
     }
 
     override fun getItemCount() = dataList.size

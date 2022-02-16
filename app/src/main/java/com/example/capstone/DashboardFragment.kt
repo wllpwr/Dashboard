@@ -2,8 +2,11 @@ package com.example.capstone
 
 import android.os.Bundle
 import android.view.*
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -12,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 class DashboardFragment : Fragment() {
     private lateinit var recycler: RecyclerView
     private lateinit var  recyclerGridAdapter: RecyclerGrid
-    private val widgetViewModel: WidgetViewModel by viewModels()
-    private var dataList = ArrayList<String>()
+    private val widgetViewModel: WidgetViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,14 +82,7 @@ class DashboardFragment : Fragment() {
         val dragHelper = ItemTouchHelper(dragWidgets)
         dragHelper.attachToRecyclerView(recycler)
 
-        dataList.add(widgetViewModel.encodedWidget1)
-        dataList.add(widgetViewModel.encodedWidget2)
-        dataList.add(widgetViewModel.encodedWidget3)
-        dataList.add(widgetViewModel.encodedWidget1)
-        dataList.add(widgetViewModel.encodedWidget1)
-        dataList.add(widgetViewModel.encodedWidget1)
-
-        recyclerGridAdapter.setDataList(dataList)
+        recyclerGridAdapter.setDataList(widgetViewModel.widgetList)
 
         return view
     }

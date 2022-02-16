@@ -1,0 +1,50 @@
+<html>
+  <style>
+      body {
+        background-color:black
+      }
+
+      div {
+        color:white;
+        font-size: xx-large;
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        top:  50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        -webkit-user-select: none;
+        user-select: none
+      }
+  </style>
+  <body>
+    <div id="timespot"></div>
+    <script>
+        window.onload = function() { setInterval(timeNow, 400); }
+        
+        function addZero(i) {
+            if (i < 10) {i = "0" + i}
+            return i;
+        }
+
+        function convertTime(i) {
+            if (i > 12) {
+                i = i - 12
+            } else if (i == 0) {
+                i = 12
+            }
+            return i;
+        }
+        
+        function timeNow() {
+            var timeElement = document.getElementById("timespot");
+            const d = new Date();
+            let h = convertTime(d.getHours());
+            let m = addZero(d.getMinutes());
+            let s = addZero(d.getSeconds());
+            let time = h + ":" + m + ":" + s;
+            timeElement.textContent = time;
+            console.log(time);
+        }
+    </script> 
+  </body>
+</html>

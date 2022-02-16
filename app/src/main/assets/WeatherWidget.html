@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <title>Weather</title>
+</head>
+<style>
+    body {
+      background-color:black
+    }
+
+    #temp {
+        color:white;
+        font-size: xx-large;
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        top:  50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        -webkit-user-select: none;
+        user-select: none
+    }
+
+    #location {
+      color:white;
+      font-size: small;
+      font-family: Arial, Helvetica, sans-serif;
+      position: absolute;
+      top:  50%;
+      left: 50%;
+      transform: translate(-50%,50%);
+      -webkit-user-select: none;
+      user-select: none
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+  var city = "5243081";
+  var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
+  
+  fetch(
+    "https://api.openweathermap.org/data/2.5/weather?id=" +
+    city +
+    "&units=imperial&appid=" +
+    apiKey
+    )
+    .then(response => response.json())
+    .then (data => {
+      var temp = document.getElementById("temp");
+      data= JSON.stringify(data);
+      var obj = JSON.parse(data);
+      console.log(obj.main.temp);
+      temp.textContent = obj.main.temp + "°F";
+  })
+</script>
+
+<body>
+  <div id="temp">N/A</div>
+  <div id="location">Winooski, VT</div>
+</body>
+
+</html>
