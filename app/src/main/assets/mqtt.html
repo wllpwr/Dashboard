@@ -1,0 +1,96 @@
+<html>
+
+<head>
+  <title>MQTT</title>
+  <!-- MQTT JS Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <div>
+    <h2 id=status>connecting...</h2>
+  </div>
+</body>
+<style>
+  body {
+    background-color: black;
+  }
+
+  div {
+
+    color: white;
+    font-size: xx-large;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-user-select: none;
+    user-select: none
+  }
+</style>
+
+
+
+
+<script>
+  //////////
+  // MQTT //
+  //////////
+  client = new Paho.MQTT.Client("tf2.sleepyarchimedes.com", Number(1234), "clientId");
+
+  // set callback handlers
+  client.onConnectionLost = onConnectionLost;
+  client.onMessageArrived = onMessageArrived;
+
+  // connect the client
+  client.connect({
+    onSuccess: onConnect,
+    onFailure: onFailure,
+  });
+
+  function onFailure() {
+    var status = document.getElementById("status");
+    status.textContent = "failed to connect";
+    status.style.color = "#BF616A";
+    client.connect({
+      onSuccess: onConnect,
+      onFailure: onFailure,
+    });
+  }
+
+  // called when the client connects
+  function onConnect() {
+    // Once a connection has been made, make a subscription.
+    client.subscribe("sleepy/stats");
+    var status = document.getElementById("status");
+    status.textContent = "awaiting data...";
+
+  }
+
+  // called when the client loses its connection
+  function onConnectionLost(responseObject) {
+    if (responseObject.errorCode !== 0) {
+      var status = document.getElementById("status");
+      console.log("onConnectionLost:" + responseObject.errorMessage);
+      status.textContent = "disconnected";
+      status.style.color = "#BF616A";
+      client.connect({
+        onSuccess: onConnect,
+        onFailure: onFailure,
+      });
+    }
+  }
+
+  // called when a message arrives
+  function onMessageArrived(message) {
+    console.log("onMessageArrived:" + message.payloadString);
+    var status = document.getElementById("status");
+  }
+</script>
+
+
+
+
+
+</html>

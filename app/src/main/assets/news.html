@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title>News</title>
+</head>
+<script>
+  
+  var query = "google";
+  var key = "d5357b43af2c449283fd9268ae6eda46";
+  
+  fetch(
+    "https://newsapi.org/v2/everything?q=" +
+    query +
+    "&apiKey=" +
+    key
+  )
+  .then (response => response.json())
+  .then (data => {
+    console.log(data);
+
+
+  })
+</script>
+
+
+
+</html>

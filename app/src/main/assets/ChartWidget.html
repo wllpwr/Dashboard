@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <title>Charting</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js"
+        integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<body>
+<canvas id="chart"></canvas>
+
+<script>
+    const ramctx = document.getElementById('chart').getContext("2d");
+
+    const ramChart = new Chart(ramctx, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          label: 'Testing',
+          data: [43, 21, 59, 39],
+          backgroundColor: [
+            'rgba(138, 193, 72, 0.5)',
+            'rgba(138, 193, 72, 0.0)',
+          ],
+          borderColor: [
+            'rgba(138, 193, 72, 1)',
+          ],
+          borderWidth: 1
+        }],
+        labels: [
+          '% used',
+          '% free'
+        ],
+      },
+
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            enabled: true,
+          },
+        },
+      }
+    });
+
+  </script>
+</body>
+
+</html>

@@ -24,20 +24,13 @@ class WidgetSettingsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_widget_settings, container, false)
 
-        val addWidgetButton = view.findViewById<Button>(R.id.add_widget_button)
+        addWidgetButton = view.findViewById(R.id.add_widget_button)
 
         val widget = args.widgetType
 
         if (widget[0] == '*') {
             addWidgetButton.setText(R.string.apply_settings)
             widget.drop(0)
-            if (widget == "Weather Widget") {
-
-            } else if (widget == "Time Widget") {
-
-            } else if (widget == "Chart Widget") {
-
-            }
         }
 
         addWidgetButton.setOnClickListener {
@@ -52,6 +45,18 @@ class WidgetSettingsFragment : Fragment() {
                 }
                 "Chart Widget" -> {
                     widgetViewModel.widgetList.add(widgetViewModel.chartWidget)
+                    view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                }
+                "News Widget" -> {
+                    widgetViewModel.widgetList.add(widgetViewModel.newsWidget)
+                    view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                }
+                "Finance Widget" -> {
+                    widgetViewModel.widgetList.add(widgetViewModel.financeWidget)
+                    view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                }
+                "MQTT Widget" -> {
+                    widgetViewModel.widgetList.add(widgetViewModel.mqttWidget)
                     view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
                 }
                 else -> {

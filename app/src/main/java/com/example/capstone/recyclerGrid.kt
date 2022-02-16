@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import android.webkit.WebView
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 
-
+@SuppressLint("SetJavaScriptEnabled")
 class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
     private var dataList = ArrayList<String>()
@@ -25,6 +26,7 @@ class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
         }
     }
 
+    /*
     fun moveItem(from: Int, to: Int) {
         var fromWidget = dataList[from]
         var toWidget = dataList[to]
@@ -33,6 +35,7 @@ class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
         fromWidget = toWidget
         toWidget = tempFromWidget
     }
+     */
 
     internal fun setDataList(dataList: ArrayList<String>) {
         this.dataList = dataList
@@ -40,15 +43,8 @@ class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
     fun deleteItem(index: Int) {
         dataList.removeAt(index)
-        notifyDataSetChanged() // crashes with position update???
+        notifyItemChanged(index)
     }
-
-    /*
-    fun addWidget(widget: String) {
-        dataList.add(widget)
-        notifyItemChanged(dataList.size)
-    }
-     */
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var webView: WebView = itemView.findViewById(R.id.web_view)

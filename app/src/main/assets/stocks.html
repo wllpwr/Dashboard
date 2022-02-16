@@ -1,0 +1,75 @@
+<html>
+<title>Stocks</title>
+
+<style>
+  body {
+    background-color:black
+  }
+
+  #ticker {
+      color:white;
+      font-size: 30px;
+      font-family: Arial, Helvetica, sans-serif;
+      position: absolute;
+      top:  50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+  }
+
+  #openPrice {
+    color:white;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    white-space: nowrap;
+    transform: translate(-50%,50%);
+  }
+</style>
+
+<script>
+
+  key = "2ug32v28NbG74uAq7YIabjcetNlvEz2h"
+  ticker = "GOOGL"
+
+  // month = Date.getMonth() + 1;
+  // date = Date.getDate();
+  // year = Date.getFullYear();
+
+  unixTime = Date.now();
+
+  todayStockURL = "https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${unixTime}/${unixTime}?apiKey=${key}"
+
+  fetch(
+    "https://api.polygon.io/v2/aggs/ticker/" +
+    ticker +
+    "/range/1/day/2022-02-08/2022-02-08" +
+    // unixTime +
+    // "/" +
+    // unixTime +
+    "?apiKey=" +
+    key
+  )
+  .then(response => response.json())
+  .then (data => {
+    console.log(data);
+    document.getElementById("ticker").textContent = ticker;
+    data = JSON.stringify(data);
+    var obj = JSON.parse(data);
+    console.log(obj.results[0]);
+    var opening = obj.results[0].o;
+    document.getElementById("openPrice").textContent = opening;
+
+
+  })
+
+</script>
+
+<body>
+  <div id="ticker"></div>
+  <div id="openPrice"></div>
+</body>
+
+
+</html>
