@@ -1,5 +1,6 @@
 package com.example.capstone
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,19 +11,43 @@ import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.webkit.WebViewAssetLoader
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import androidx.webkit.WebViewClientCompat
+import kotlinx.android.synthetic.main.widget.view.*
 
-
+@SuppressLint("SetJavaScriptEnabled")
 class WidgetSettingsFragment : Fragment() {
 
     private val args: WidgetSettingsFragmentArgs by navArgs()
     private val widgetViewModel: WidgetViewModel by activityViewModels()
     private lateinit var addWidgetButton: Button
+    private lateinit var webView: WebView
+
+    private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClientCompat() {
+        override fun shouldInterceptRequest(
+            view: WebView,
+            request: WebResourceRequest
+        ): WebResourceResponse? {
+            return assetLoader.shouldInterceptRequest(request.url)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_widget_settings, container, false)
+
+        webView = view.findViewById(R.id.web_view)
+        webView.settings.javaScriptEnabled = true
+
+        val assetLoader = WebViewAssetLoader.Builder()
+            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(view.context))
+            .build()
+        webView.webViewClient = LocalContentWebViewClient(assetLoader)
 
         addWidgetButton = view.findViewById(R.id.add_widget_button)
 
@@ -60,39 +85,49 @@ class WidgetSettingsFragment : Fragment() {
             }
         }
 
-
         if (widget[0] == '*') {
             addWidgetButton.setText(R.string.apply_settings)
-            when (widget) {
-                // WIDGET SETTINGS
-                "*" + widgetViewModel.weatherWidget -> {
-                    Log.d("addWidgetButton", "weather widget settings")
-                    return view
-                }
-                "*" + widgetViewModel.timeWidget -> {
-                    Log.d("addWidgetButton", "time widget settings")
-                    return view
-                }
-                "*" + widgetViewModel.chartWidget -> {
-                    Log.d("addWidgetButton", "chart widget settings")
-                    return view
-                }
-                "*" + widgetViewModel.newsWidget -> {
-                    Log.d("addWidgetButton", "news widget settings")
-                    return view
-                }
-                "*" + widgetViewModel.financeWidget -> {
-                    Log.d("addWidgetButton", "finance widget settings")
-                    return view
-                }
-                "*" + widgetViewModel.mqttWidget -> {
-                    Log.d("addWidgetButton", "mqtt widget settings")
-                    return view
-                }
-                else -> {
-                    Log.d("addWidgetButton", "else")
-                    return view
-                }
+        }
+        when (widget) {
+            // WIDGET SETTINGS
+            '*' + widgetViewModel.weatherWidget -> {
+                view.web_view.loadUrl(widgetViewModel.weatherWidget)
+            }
+            "Weather Widget" -> {
+                view.web_view.loadUrl(widgetViewModel.weatherWidget)
+            }
+            '*' + widgetViewModel.timeWidget -> {
+                view.web_view.loadUrl(widgetViewModel.timeWidget)
+            }
+            "Time Widget" -> {
+                view.web_view.loadUrl(widgetViewModel.timeWidget)
+            }
+            '*' + widgetViewModel.chartWidget -> {
+                view.web_view.loadUrl(widgetViewModel.chartWidget)
+            }
+            "Chart Widget" -> {
+                view.web_view.loadUrl(widgetViewModel.chartWidget)
+            }
+            '*' + widgetViewModel.newsWidget -> {
+                view.web_view.loadUrl(widgetViewModel.newsWidget)
+            }
+            "News Widget" -> {
+                view.web_view.loadUrl(widgetViewModel.newsWidget)
+            }
+            '*' + widgetViewModel.financeWidget -> {
+                view.web_view.loadUrl(widgetViewModel.financeWidget)
+            }
+            "Finance Widget" -> {
+                view.web_view.loadUrl(widgetViewModel.financeWidget)
+            }
+            '*' + widgetViewModel.mqttWidget -> {
+                view.web_view.loadUrl(widgetViewModel.mqttWidget)
+            }
+            "MQTT Widget" -> {
+                view.web_view.loadUrl(widgetViewModel.mqttWidget)
+            }
+            else -> {
+                Log.d("addWidgetButton", "else")
             }
         }
         return view

@@ -2,6 +2,7 @@ package com.example.capstone
 
 import android.os.Bundle
 import android.view.*
+import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController

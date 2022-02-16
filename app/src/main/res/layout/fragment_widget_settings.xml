@@ -1,172 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/weather_widget_location_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="@string/weather_widget_location_setting"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_baseline_edit_location_24"
-            android:drawablePadding="20dp">
-
-        </TextView>
-
-        <SearchView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </SearchView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/weather_widget_cf_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="@string/weather_widget_cf_setting"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_baseline_wb_sunny_24"
-            android:drawablePadding="20dp">
-
-        </TextView>
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </com.google.android.material.switchmaterial.SwitchMaterial>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/theme_setting_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="@string/theme_settings"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_baseline_color_lens_24"
-            android:drawablePadding="20dp">
-
-        </TextView>
-
-        <Spinner
-            android:id="@+id/theme_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:minHeight="48dp"
-            android:padding="20dp"
-            android:text="@string/theme_settings"
-            android:textColor="@color/black"
-            android:textSize="18sp">
-        </Spinner>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/font_setting_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="@string/font_settings"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_baseline_font_download_24"
-            android:drawablePadding="20dp">
-        </TextView>
-
-        <Spinner
-            android:id="@+id/font_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:minHeight="48dp"
-            android:padding="20dp"
-            android:text="@string/font_settings"
-            android:textColor="@color/black"
-            android:textSize="18sp">
-
-        </Spinner>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/font_size_setting_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="20dp"
-            android:text="@string/font_size_settings"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_baseline_format_size_24"
-            android:drawablePadding="20dp">
-        </TextView>
-
-        <Spinner
-            android:id="@+id/font_size_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:minHeight="48dp"
-            android:padding="20dp"
-            android:text="@string/theme_settings"
-            android:textColor="@color/black"
-            android:textSize="18sp">
-
-        </Spinner>
-
-    </LinearLayout>
-
-    <View
+    <WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_widget_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/add_widget_button"
@@ -176,8 +25,11 @@
         android:background="@drawable/button_shape"
         android:padding="10dp"
         android:text="@string/add_button"
-        android:textColor="@color/white">
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     </Button>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
