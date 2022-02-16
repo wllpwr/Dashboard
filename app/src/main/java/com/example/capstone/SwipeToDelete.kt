@@ -9,10 +9,10 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 abstract class SwipeToDelete(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT ) {
 
-    val deleteColor = ContextCompat.getColor(context, R.color.red)
-    val widgetSettingsColor = ContextCompat.getColor(context, R.color.light_gray)
-    val deleteIcon = R.drawable.ic_baseline_delete_sweep_24
-    val widgetSettingsIcon = R.drawable.ic_baseline_settings_24
+    private val deleteColor = ContextCompat.getColor(context, R.color.red)
+    private val widgetSettingsColor = ContextCompat.getColor(context, R.color.light_gray)
+    private val deleteIcon = R.drawable.ic_baseline_delete_sweep_24
+    private val widgetSettingsIcon = R.drawable.ic_baseline_settings_24
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -32,8 +32,8 @@ abstract class SwipeToDelete(context: Context) : ItemTouchHelper.SimpleCallback(
         isCurrentlyActive: Boolean
     ) {
 
-
-        RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        //https://github.com/xabaras/RecyclerViewSwipeDecorator
+        RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX / 3, dY, actionState, isCurrentlyActive)
             .addSwipeLeftBackgroundColor(deleteColor)
             .addSwipeLeftActionIcon(deleteIcon)
             .addSwipeRightBackgroundColor(widgetSettingsColor)
@@ -41,6 +41,6 @@ abstract class SwipeToDelete(context: Context) : ItemTouchHelper.SimpleCallback(
             .create()
             .decorate();
 
-        super.onChildDraw(c, recyclerView, viewHolder, dX / 4, dY, actionState, isCurrentlyActive)
+        super.onChildDraw(c, recyclerView, viewHolder, dX / 3, dY, actionState, isCurrentlyActive)
     }
 }

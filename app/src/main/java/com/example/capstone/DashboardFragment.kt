@@ -68,7 +68,7 @@ class DashboardFragment : Fragment() {
 
         val swipeHelper = ItemTouchHelper(swipedDelete)
         swipeHelper.attachToRecyclerView(recycler)
-
+/*
         val dragWidgets = object : DragToMoveWidgets() {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -89,7 +89,7 @@ class DashboardFragment : Fragment() {
 
         val dragHelper = ItemTouchHelper(dragWidgets)
         dragHelper.attachToRecyclerView(recycler)
-
+*/
         recyclerGridAdapter.setDataList(widgetViewModel.widgetList)
 
         return view
