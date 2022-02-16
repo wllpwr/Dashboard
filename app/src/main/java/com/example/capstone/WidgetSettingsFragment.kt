@@ -28,13 +28,8 @@ class WidgetSettingsFragment : Fragment() {
 
         val widget = args.widgetType
 
-        if (widget[0] == '*') {
-            addWidgetButton.setText(R.string.apply_settings)
-            widget.drop(0)
-        }
-
         addWidgetButton.setOnClickListener {
-            when (widget) {
+            when (widget) { // ADD WIDGET
                 "Weather Widget" -> {
                     widgetViewModel.widgetList.add(widgetViewModel.weatherWidget)
                     view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
@@ -60,13 +55,46 @@ class WidgetSettingsFragment : Fragment() {
                     view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
                 }
                 else -> {
-                    Log.d("addWidgetButton", "else")
+                    view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
                 }
             }
         }
 
+
+        if (widget[0] == '*') {
+            addWidgetButton.setText(R.string.apply_settings)
+            when (widget) {
+                // WIDGET SETTINGS
+                "*" + widgetViewModel.weatherWidget -> {
+                    Log.d("addWidgetButton", "weather widget settings")
+                    return view
+                }
+                "*" + widgetViewModel.timeWidget -> {
+                    Log.d("addWidgetButton", "time widget settings")
+                    return view
+                }
+                "*" + widgetViewModel.chartWidget -> {
+                    Log.d("addWidgetButton", "chart widget settings")
+                    return view
+                }
+                "*" + widgetViewModel.newsWidget -> {
+                    Log.d("addWidgetButton", "news widget settings")
+                    return view
+                }
+                "*" + widgetViewModel.financeWidget -> {
+                    Log.d("addWidgetButton", "finance widget settings")
+                    return view
+                }
+                "*" + widgetViewModel.mqttWidget -> {
+                    Log.d("addWidgetButton", "mqtt widget settings")
+                    return view
+                }
+                else -> {
+                    Log.d("addWidgetButton", "else")
+                    return view
+                }
+            }
+        }
         return view
     }
-
-
 }

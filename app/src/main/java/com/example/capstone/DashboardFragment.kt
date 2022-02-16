@@ -55,11 +55,9 @@ class DashboardFragment : Fragment() {
                 if (direction == ItemTouchHelper.LEFT) {
                     recyclerGridAdapter.deleteItem(viewHolder.adapterPosition)
                 } else if (direction == ItemTouchHelper.RIGHT) {
-                    //val widgetSwiped = view.findViewById<WebView>(R.id.web_view)
+                    val widgetSwiped = widgetViewModel.widgetList[viewHolder.adapterPosition]
 
-                    val action = DashboardFragmentDirections.actionDashboardFragment2ToWidgetSettingsFragment("*")
-
-
+                    val action = DashboardFragmentDirections.actionDashboardFragment2ToWidgetSettingsFragment("*$widgetSwiped")
                     view.findNavController().navigate(action)
 
                 }
