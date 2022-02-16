@@ -47,7 +47,7 @@ class DashboardFragment : Fragment() {
 
         recycler = view.findViewById(R.id.recyclerView)
         recycler.layoutManager = GridLayoutManager(context,2)
-        recyclerGridAdapter = RecyclerGrid()
+        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList)
         recycler.adapter = recyclerGridAdapter
 
         val swipedDelete = object : SwipeToDelete(requireContext()) {
@@ -88,8 +88,6 @@ class DashboardFragment : Fragment() {
         val dragHelper = ItemTouchHelper(dragWidgets)
         dragHelper.attachToRecyclerView(recycler)
 */
-        recyclerGridAdapter.setDataList(widgetViewModel.widgetList)
-
         return view
     }
 }

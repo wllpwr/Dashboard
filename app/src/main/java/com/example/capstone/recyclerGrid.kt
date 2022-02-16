@@ -12,9 +12,8 @@ import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 
 @SuppressLint("SetJavaScriptEnabled")
-class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
+class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
-    private var dataList = ArrayList<String>()
 
     private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClientCompat() {
         //@RequiresApi(21)
@@ -37,13 +36,9 @@ class RecyclerGrid: RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
     }
      */
 
-    internal fun setDataList(dataList: ArrayList<String>) {
-        this.dataList = dataList
-    }
-
     fun deleteItem(index: Int) {
         dataList.removeAt(index)
-        notifyItemChanged(index)
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
