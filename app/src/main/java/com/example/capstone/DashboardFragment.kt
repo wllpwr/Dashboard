@@ -2,11 +2,9 @@ package com.example.capstone
 
 import android.os.Bundle
 import android.view.*
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
-import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -52,9 +50,19 @@ class DashboardFragment : Fragment() {
         recyclerGridAdapter = RecyclerGrid()
         recycler.adapter = recyclerGridAdapter
 
-        val swipedDelete = object : SwipeToDelete() {
+        val swipedDelete = object : SwipeToDelete(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                recyclerGridAdapter.deleteItem(viewHolder.adapterPosition)
+                if (direction == ItemTouchHelper.LEFT) {
+                    recyclerGridAdapter.deleteItem(viewHolder.adapterPosition)
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    //val widgetSwiped = view.findViewById<WebView>(R.id.web_view)
+
+                    val action = DashboardFragmentDirections.actionDashboardFragment2ToWidgetSettingsFragment("*")
+
+
+                    view.findNavController().navigate(action)
+
+                }
             }
         }
 

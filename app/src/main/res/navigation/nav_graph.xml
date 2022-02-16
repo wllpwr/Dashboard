@@ -12,7 +12,6 @@
         <action
             android:id="@+id/action_addWidgetFragment_to_widgetSettingsFragment"
             app:destination="@id/widgetSettingsFragment" />
-        <argument android:name="viewModel" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment2"
@@ -24,6 +23,9 @@
         <action
             android:id="@+id/action_dashboardFragment2_to_appSettingsFragment"
             app:destination="@id/appSettingsFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment2_to_widgetSettingsFragment"
+            app:destination="@id/widgetSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/appSettingsFragment"

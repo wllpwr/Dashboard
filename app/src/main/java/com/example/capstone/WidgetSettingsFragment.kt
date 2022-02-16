@@ -28,6 +28,18 @@ class WidgetSettingsFragment : Fragment() {
 
         val widget = args.widgetType
 
+        if (widget[0] == '*') {
+            addWidgetButton.setText(R.string.apply_settings)
+            widget.drop(0)
+            if (widget == "Weather Widget") {
+
+            } else if (widget == "Time Widget") {
+
+            } else if (widget == "Chart Widget") {
+
+            }
+        }
+
         addWidgetButton.setOnClickListener {
             when (widget) {
                 "Weather Widget" -> {
