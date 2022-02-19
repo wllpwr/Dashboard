@@ -1,7 +1,6 @@
 package com.example.capstone
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View

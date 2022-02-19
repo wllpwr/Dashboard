@@ -23,6 +23,8 @@ class DashboardFragment : Fragment() {
         //https://stackoverflow.com/questions/17401799/how-to-know-how-many-shared-preference-in-shared-preferences-in-android/17401994
         if (widgetViewModel.isStart) {
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+            Log.d("test", "onCreateSharedPref" + sharedPref.all.toString())
+            Log.d("test", "onCreateViewModelBefore" + widgetViewModel.widgetList.toString())
             val sharedPrefSize = sharedPref.all.size
             for (index in range(0, sharedPrefSize)) {
                 val widget = sharedPref.getString(index.toString(), null)
@@ -30,6 +32,7 @@ class DashboardFragment : Fragment() {
                     widgetViewModel.widgetList.add(widget)
                 }
             }
+            Log.d("test", "onCreateViewModelAfter" + widgetViewModel.widgetList.toString())
             widgetViewModel.isStart = false
         }
         setHasOptionsMenu(true)
@@ -68,8 +71,10 @@ class DashboardFragment : Fragment() {
 
         val swipedDelete = object : SwipeToDelete(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Log.d("test", "SwipeBefore" + widgetViewModel.widgetList.toString())
                 if (direction == ItemTouchHelper.LEFT) {
                     recyclerGridAdapter.deleteItem(viewHolder.adapterPosition)
+                    Log.d("test", "SwipeAfter" + widgetViewModel.widgetList.toString())
                 } else if (direction == ItemTouchHelper.RIGHT) {
                     val widgetSwiped = widgetViewModel.widgetList[viewHolder.adapterPosition]
 

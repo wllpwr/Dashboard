@@ -24,10 +24,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onStop() {
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
         with (sharedPref.edit()) {
+            clear()
             for ((count, widget) in viewModel.widgetList.withIndex()) {
                 putString("$count", widget)
             }
             apply()
+            Log.d("test", "onStopSharedPref" + sharedPref.all.toString())
+            Log.d("test", "onStopViewModel" + viewModel.widgetList.toString())
         }
 
         super.onStop()
