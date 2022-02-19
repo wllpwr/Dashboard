@@ -6,6 +6,8 @@ class WidgetViewModel : ViewModel() {
 
     var widgetList = ArrayList<String>()
 
+    var isStart = true;
+
     val weatherWidget = "https://appassets.androidplatform.net/assets/WeatherWidget.html"
     val timeWidget = "https://appassets.androidplatform.net/assets/TimeWidget.html"
     val chartWidget = "https://appassets.androidplatform.net/assets/ChartWidget.html"

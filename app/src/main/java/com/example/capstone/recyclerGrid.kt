@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -24,17 +25,6 @@ class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapte
             return assetLoader.shouldInterceptRequest(request.url)
         }
     }
-
-    /*
-    fun moveItem(from: Int, to: Int) {
-        var fromWidget = dataList[from]
-        var toWidget = dataList[to]
-        val tempFromWidget = dataList[from]
-
-        fromWidget = toWidget
-        toWidget = tempFromWidget
-    }
-     */
 
     fun deleteItem(index: Int) {
         dataList.removeAt(index)
@@ -74,5 +64,4 @@ class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapte
     }
 
     override fun getItemCount() = dataList.size
-
 }

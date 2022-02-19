@@ -1,8 +1,9 @@
 package com.example.capstone
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -10,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import java.util.stream.IntStream.range
 
 class DashboardFragment : Fragment() {
     private lateinit var recycler: RecyclerView
@@ -17,8 +20,20 @@ class DashboardFragment : Fragment() {
     private val widgetViewModel: WidgetViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        //https://stackoverflow.com/questions/17401799/how-to-know-how-many-shared-preference-in-shared-preferences-in-android/17401994
+        if (widgetViewModel.isStart) {
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+            val sharedPrefSize = sharedPref.all.size
+            for (index in range(0, sharedPrefSize)) {
+                val widget = sharedPref.getString(index.toString(), null)
+                if (widget != null) {
+                    widgetViewModel.widgetList.add(widget)
+                }
+            }
+            widgetViewModel.isStart = false
+        }
         setHasOptionsMenu(true)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -67,7 +82,7 @@ class DashboardFragment : Fragment() {
 
         val swipeHelper = ItemTouchHelper(swipedDelete)
         swipeHelper.attachToRecyclerView(recycler)
-/*
+
         val dragWidgets = object : DragToMoveWidgets() {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -78,7 +93,7 @@ class DashboardFragment : Fragment() {
                 val from = viewHolder.adapterPosition
                 val to = target.adapterPosition
 
-                adapter.moveItem(from, to)
+                Collections.swap(widgetViewModel.widgetList, from, to)
 
                 adapter.notifyItemMoved(from, to)
 
@@ -88,7 +103,7 @@ class DashboardFragment : Fragment() {
 
         val dragHelper = ItemTouchHelper(dragWidgets)
         dragHelper.attachToRecyclerView(recycler)
-*/
+
         return view
     }
 }

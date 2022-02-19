@@ -1,11 +1,17 @@
 package com.example.capstone
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.fragment.app.commit
 
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    private val viewModel: WidgetViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
@@ -13,5 +19,17 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 setReorderingAllowed(true)
             }
         }
+    }
+
+    override fun onStop() {
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            for ((count, widget) in viewModel.widgetList.withIndex()) {
+                putString("$count", widget)
+            }
+            apply()
+        }
+
+        super.onStop()
     }
 }
