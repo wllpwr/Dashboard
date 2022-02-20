@@ -3,6 +3,7 @@ package com.example.capstone
 import android.webkit.JavascriptInterface
 import android.content.Context
 import android.util.Log
+import java.io.File
 
 class WebViewInterface(private val context: Context) {
     @JavascriptInterface
@@ -16,13 +17,10 @@ class WebViewInterface(private val context: Context) {
 
         val jsonString2 = context.openFileInput(fileName).bufferedReader().readText()
 
+        val file = File(context.filesDir, fileName)
+
+        Log.d("test1", file.canonicalPath)
+
         Log.d("test1", jsonString2)
     }
-
-    @JavascriptInterface
-    fun logToAndroidFromWebView(message: String) {
-        Log.d("test1", message)
-    }
-
-
 }

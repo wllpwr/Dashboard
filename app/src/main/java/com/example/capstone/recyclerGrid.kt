@@ -1,13 +1,12 @@
 package com.example.capstone
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
-import android.webkit.WebView
+import android.webkit.*
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewClientCompat
 
@@ -54,6 +53,19 @@ class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapte
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
         holder.webView.settings.allowFileAccess = true
+
+        holder.webView.webChromeClient = object : WebChromeClient() {
+            override fun onConsoleMessage(message: ConsoleMessage): Boolean {
+                Log.d("test1", "${message.message()} -- From line " +
+                        "${message.lineNumber()} of ${message.sourceId()}")
+                return true
+            }
+        }
+
+        val json = holder.webView.context.openFileInput("weatherSettings.json").bufferedReader().readText()
+
+        CookieManager.getInstance().setAcceptCookie(true)
+        CookieManager.getInstance().setCookie(data, json)
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(holder.webView.context))

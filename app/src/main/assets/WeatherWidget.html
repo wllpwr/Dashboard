@@ -37,7 +37,7 @@
 
   var city = "5243081";
   var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
-  
+
   fetch(
     "https://api.openweathermap.org/data/2.5/weather?id=" +
     city +
@@ -52,6 +52,8 @@
       console.log(obj.main.temp);
       temp.textContent = obj.main.temp + "°F";
   })
+
+  console.log(document.cookie)
 </script>
 
 <body>

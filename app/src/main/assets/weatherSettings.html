@@ -22,6 +22,8 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+  var fileName = "weatherSettings.json"
+
   function sendMessage(fileName, jsonString) {
       Android.createAndWriteToJson(fileName, jsonString);
   }
@@ -30,18 +32,19 @@
     var zipCode = document.getElementById("zipCode").value
     var celsiusOrFahrenheit = document.querySelector('input[name="tempType"]:checked').value;
 
-    Android.logToAndroidFromWebView(zipCode)
-    Android.logToAndroidFromWebView(celsiusOrFahrenheit)
+    console.log(zipCode)
+    console.log(celsiusOrFahrenheit)
 
     var jsonString = `{"zipCode": "${zipCode}", "CelsiusOrFahrenheit": "${celsiusOrFahrenheit}"}`
 
-    sendMessage("weatherSettings.json", jsonString)
+    sendMessage(fileName, jsonString)
   }
 </script>
 
 <body>
 <label>Zip Code:</label>
-<input id="zipCode" type="text" value=""><br><br>
+<input id="zipCode" type="text" value="">
+<div id="currentZip"></div><br><br>
 <!-- Rounded switch -->
 <label>Celsius or Fahrenheit:</label><br>
 <input type="radio" id="Celsius" name="tempType" value="Celsius">
