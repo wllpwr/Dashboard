@@ -53,6 +53,7 @@ class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapte
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
+        holder.webView.settings.allowFileAccess = true
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(holder.webView.context))
