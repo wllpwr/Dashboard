@@ -47,15 +47,6 @@ class WidgetSettingsFragment : Fragment() {
         webView = view.findViewById(R.id.web_view)
         webView.settings.javaScriptEnabled = true
         webView.addJavascriptInterface(WebViewInterface(webView.context),"Android")
-        webView.settings.allowFileAccess = true
-
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onConsoleMessage(message: ConsoleMessage): Boolean {
-                Log.d("test1", "${message.message()} -- From line " +
-                        "${message.lineNumber()} of ${message.sourceId()}")
-                return true
-            }
-        }
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(view.context))

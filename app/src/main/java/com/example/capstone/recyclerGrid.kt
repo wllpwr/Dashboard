@@ -52,7 +52,6 @@ class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapte
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
-        holder.webView.settings.allowFileAccess = true
 
         holder.webView.webChromeClient = object : WebChromeClient() {
             override fun onConsoleMessage(message: ConsoleMessage): Boolean {
