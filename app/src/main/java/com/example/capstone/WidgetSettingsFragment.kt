@@ -35,6 +35,11 @@ class WidgetSettingsFragment : Fragment() {
         }
     }
 
+    private fun updateNative(){
+        webView.evaluateJavascript(
+            "updateFromNative()",null)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +48,7 @@ class WidgetSettingsFragment : Fragment() {
 
         webView = view.findViewById(R.id.web_view)
         webView.settings.javaScriptEnabled = true
+        webView.addJavascriptInterface(WebViewInterface(webView.context),"Android")
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(view.context))
@@ -55,7 +61,13 @@ class WidgetSettingsFragment : Fragment() {
 
         addWidgetButton.setOnClickListener {
             when (widget) { // ADD WIDGET
+                '*' + widgetViewModel.weatherWidget -> {
+                    updateNative()
+                    view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                }
                 "Weather Widget" -> {
+                    updateNative()
+
                     widgetViewModel.widgetList.add(widgetViewModel.weatherWidget)
                     view.findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
                 }
@@ -91,10 +103,10 @@ class WidgetSettingsFragment : Fragment() {
         when (widget) {
             // WIDGET SETTINGS
             '*' + widgetViewModel.weatherWidget -> {
-                view.web_view.loadUrl(widgetViewModel.weatherWidget)
+                view.web_view.loadUrl(widgetViewModel.weatherWidgetSettings)
             }
             "Weather Widget" -> {
-                view.web_view.loadUrl(widgetViewModel.weatherWidget)
+                view.web_view.loadUrl(widgetViewModel.weatherWidgetSettings)
             }
             '*' + widgetViewModel.timeWidget -> {
                 view.web_view.loadUrl(widgetViewModel.timeWidget)
