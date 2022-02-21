@@ -13,7 +13,7 @@ class WidgetViewModel : ViewModel() {
 
     val timeWidget = "https://appassets.androidplatform.net/assets/TimeWidget.html"
     val chartWidget = "https://appassets.androidplatform.net/assets/ChartWidget.html"
-    val newsWidget = "https://appassets.androidplatform.net/assets/news.html"
+    val newsWidget = "https://appassets.androidplatform.net/assets/reddit.html"
     val financeWidget = "https://appassets.androidplatform.net/assets/stocks.html"
     val mqttWidget = "https://appassets.androidplatform.net/assets/mqtt.html"
 }

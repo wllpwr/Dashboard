@@ -1,0 +1,62 @@
+<html>
+<title>Reddit</title>
+
+<style>
+  body {
+    background-color: black
+  }
+
+  #subreddit {
+    color: white;
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #topPost {
+    color: white;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <div id="subreddit"></div><br>
+  <div id="topPost"></div>
+</body>
+<script>
+
+  function truncate(str, maxlength) {
+    return (str.length > maxlength) ?
+      str.slice(0, maxlength - 1) + '…' : str;
+  }
+
+
+  var subreddit = "news";
+  var listing = "top";
+  var timeframe = "today";
+
+  document.getElementById("subreddit").textContent = "r/" + subreddit;
+  fetch("https://www.reddit.com/r/" + 
+  subreddit + "/" + 
+  listing + ".json?limit=1&t=" + timeframe)
+    .then(response => response.json())
+    .then(data => {
+
+      postData = data.data.children[0].data;
+      console.log(postData);
+      document.getElementById("topPost").textContent = truncate(postData.title, 100);
+
+      
+    })
+    .catch(err => {
+      console.error(err);
+    });
+
+</script>
+
+
+
+
+</html>

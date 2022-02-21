@@ -52,19 +52,7 @@ class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapte
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
-
-        holder.webView.webChromeClient = object : WebChromeClient() {
-            override fun onConsoleMessage(message: ConsoleMessage): Boolean {
-                Log.d("test1", "${message.message()} -- From line " +
-                        "${message.lineNumber()} of ${message.sourceId()}")
-                return true
-            }
-        }
-
-        val json = holder.webView.context.openFileInput("weatherSettings.json").bufferedReader().readText()
-
-        CookieManager.getInstance().setAcceptCookie(true)
-        CookieManager.getInstance().setCookie(data, json)
+        holder.webView.addJavascriptInterface(WebViewInterface(holder.webView.context),"Android")
 
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(holder.webView.context))
