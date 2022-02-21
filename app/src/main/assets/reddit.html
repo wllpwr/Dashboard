@@ -45,7 +45,6 @@
     .then(data => {
 
       postData = data.data.children[0].data;
-      console.log(postData);
       document.getElementById("topPost").textContent = truncate(postData.title, 100);
 
       
