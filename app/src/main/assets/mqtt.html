@@ -34,10 +34,12 @@
 
 
 <script>
-  //////////
-  // MQTT //
-  //////////
-  client = new Paho.MQTT.Client("tf2.sleepyarchimedes.com", Number(1234), "clientId");
+
+  var server = "tf2.sleepyarchimedes.com"
+  var port = 1234
+  var topic = "sleepy/stats"
+
+  client = new Paho.MQTT.Client("server, port, "clientId");
 
   // set callback handlers
   client.onConnectionLost = onConnectionLost;
@@ -62,7 +64,7 @@
   // called when the client connects
   function onConnect() {
     // Once a connection has been made, make a subscription.
-    client.subscribe("sleepy/stats");
+    client.subscribe(topic);
     var status = document.getElementById("status");
     status.textContent = "awaiting data...";
 
