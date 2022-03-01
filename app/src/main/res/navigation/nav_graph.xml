@@ -31,7 +31,7 @@
         android:id="@+id/appSettingsFragment"
         android:name="com.example.capstone.AppSettingsFragment"
         android:label="fragment_app_settings"
-        tools:layout="@layout/fragment_app_settings" />
+        tools:layout="@xml/app_settings" />
     <fragment
         android:id="@+id/widgetSettingsFragment"
         android:name="com.example.capstone.WidgetSettingsFragment"

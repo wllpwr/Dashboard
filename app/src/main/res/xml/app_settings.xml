@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        app:key="theme"
+        app:title="Theme"
+        app:summary="Change the theme of the app"
+        app:entries="@array/theme"
+        app:entryValues="@array/theme"
+        app:icon="@drawable/ic_baseline_color_lens_24"/>
+
+    <ListPreference
+        app:key="font_style"
+        app:title="Font"
+        app:summary="Change the font of the app"
+        app:entries="@array/font"
+        app:entryValues="@array/font"
+        app:icon="@drawable/ic_baseline_font_download_24"/>
+</PreferenceScreen>

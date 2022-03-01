@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme">
+        <item>Dark</item>
+        <item>Light</item>
+        <item>Blue</item>
+        <item>Red</item>
+    </string-array>
+    <string-array name="font">
+        <item>Arial</item>
+        <item>Comic Sans</item>
+        <item>New Times Roman</item>
+    </string-array>
+</resources>
