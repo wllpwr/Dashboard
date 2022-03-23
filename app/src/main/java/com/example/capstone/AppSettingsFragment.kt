@@ -8,6 +8,4 @@ class AppSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.app_settings, rootKey)
     }
-
-
 }

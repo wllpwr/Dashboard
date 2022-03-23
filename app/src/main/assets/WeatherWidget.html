@@ -39,25 +39,22 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+  function sendMessage(fileName, jsonString) {
+      Android.createAndWriteToJson(fileName, jsonString);
+  }
 
   window.onload = function getCurrentSettings() {
-    var jsonString = Android.readJson("weatherSettings.json")
+    var jsonString = '[{"type": "editText", "name": "zipCode", "title": "Zip Code", "summary": "Enter the Zip Code of the location you want the weather from"}, {"type": "switch", "name": "tempUnit", "title": "Temperature Unit", "summary": "Change the unit temperature is displayed in"}]'
+
+    var fileName = "weatherSettings.json"
+
+    sendMessage(fileName, jsonString)
+
     var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
-    var unit;
-    var jsonObj = JSON.parse(jsonString)
-
-    var zipCode = jsonObj.zipCode
-
-    console.log(zipCode)
+    var unit = "imperial";
+    var zipCode = "05401";
 
     document.getElementById("location").innerHTML = zipCode
-
-    if (jsonObj.CelsiusOrFahrenheit == "Celsius")
-    {
-      unit = "metric"
-    } else {
-      unit = "imperial"
-    }
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${apiKey}&units=${unit}`
     )

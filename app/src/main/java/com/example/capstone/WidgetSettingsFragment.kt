@@ -1,21 +1,139 @@
 package com.example.capstone
 
-import android.annotation.SuppressLint
+import android.R.attr.button
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.webkit.*
-import android.widget.Button
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.webkit.WebViewAssetLoader
-import androidx.webkit.WebViewClientCompat
+import androidx.preference.*
 import kotlinx.android.synthetic.main.widget.view.*
+import org.json.JSONArray
+import org.json.JSONTokener
 
+
+class WidgetSettingsFragment : PreferenceFragmentCompat() {
+    private val args: WidgetSettingsFragmentArgs by navArgs()
+    private val widgetViewModel: WidgetViewModel by activityViewModels()
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        val widget = args.widgetType
+
+        val prefContext = preferenceManager.context
+        val screen = preferenceManager.createPreferenceScreen(prefContext)
+
+        var preference = Preference(prefContext)
+
+
+        val jsonString = readJson(widget)
+
+        val keySuffix = generateKey()
+
+        val jsonArray = JSONTokener(jsonString).nextValue() as JSONArray
+        for (i in 0 until jsonArray.length()) {
+            val name = jsonArray.getJSONObject(i).getString("name")
+            val type = jsonArray.getJSONObject(i).getString("type")
+            val title = jsonArray.getJSONObject(i).getString("title")
+            val summary = jsonArray.getJSONObject(i).getString("summary")
+
+            if (type  == "editText") {
+                preference = EditTextPreference(prefContext)
+            }
+            if (type == "switch") {
+                preference = SwitchPreferenceCompat(prefContext)
+            }
+
+            preference.title = title
+            preference.summary = summary
+            preference.key = name + keySuffix
+
+            screen.addPreference(preference)
+        }
+
+
+
+        // update or add widget button
+        val addOrUpdateButton = Preference(prefContext)
+        addOrUpdateButton.key = "ConfirmButton"
+        addOrUpdateButton.title = "Confirm"
+        addOrUpdateButton.summary = "Update Settings of Widget or Add Widget"
+
+        addOrUpdateButton.onPreferenceClickListener = Preference.OnPreferenceClickListener { //code for what you want it to do
+            addWidget(widget)
+        }
+
+
+        screen.addPreference(addOrUpdateButton)
+
+        preferenceScreen = screen
+    }
+
+    private fun addWidget(widget: String) : Boolean {
+        when (widget) { // ADD WIDGET
+            '*' + widgetViewModel.weatherWidget -> {
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+            "Weather Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.weatherWidget)
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+            "Time Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.timeWidget)
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+            "Chart Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.chartWidget)
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+            "News Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.newsWidget)
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+            "Finance Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.financeWidget)
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+            "MQTT Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.mqttWidget)
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+            else -> {
+                view?.findNavController()?.navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                return true
+            }
+        }
+    }
+
+
+    private fun readJson(fileName: String) : String? {
+        return context?.openFileInput("weatherSettings.json")?.bufferedReader()?.readText()
+    }
+
+    private fun generateKey() : String {
+        val keySize = 10
+
+        var key = "_"
+
+        val alphaNumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+        for (i in 1..keySize) {
+            val index = (alphaNumerics.indices).random()
+
+            key += alphaNumerics[index]
+        }
+
+        return key
+    }
+}
+
+/*
 @SuppressLint("SetJavaScriptEnabled")
 class WidgetSettingsFragment : Fragment() {
 
@@ -151,3 +269,4 @@ class WidgetSettingsFragment : Fragment() {
         return view
     }
 }
+*/
