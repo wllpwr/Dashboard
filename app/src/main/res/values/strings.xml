@@ -3,6 +3,7 @@
     <string name="add_button">Add Widget</string>
     <string name="delete_button">Delete Widget</string>
     <string name="settings_button">Settings</string>
+    <string name="move_button">Move Widgets</string>
     <string name="theme_settings">Change Theme</string>
     <string name="font_settings">Change Font</string>
     <string name="font_size_settings">Change Font Size</string>

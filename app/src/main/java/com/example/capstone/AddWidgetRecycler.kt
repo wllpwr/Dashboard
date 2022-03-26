@@ -33,7 +33,7 @@ class AddWidgetRecycler(private val dataSet: Array<String>, private val dataIcon
 
         val widgetClicked = viewHolder.textView.text
 
-        val action = AddWidgetFragmentDirections.actionAddWidgetFragmentToWidgetSettingsFragment(widgetClicked.toString())
+        val action = AddWidgetFragmentDirections.actionAddWidgetFragmentToDashboardFragment2(widgetClicked.toString())
 
         // Define click listener for the textView.
         viewHolder.textView.setOnClickListener {
@@ -44,5 +44,4 @@ class AddWidgetRecycler(private val dataSet: Array<String>, private val dataIcon
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
 }

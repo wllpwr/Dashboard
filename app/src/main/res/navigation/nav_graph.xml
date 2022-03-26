@@ -10,13 +10,16 @@
         android:label="fragment_add_widget"
         tools:layout="@layout/fragment_add_widget" >
         <action
-            android:id="@+id/action_addWidgetFragment_to_widgetSettingsFragment"
-            app:destination="@id/widgetSettingsFragment" />
+            android:id="@+id/action_addWidgetFragment_to_dashboardFragment2"
+            app:destination="@id/dashboardFragment2" />
     </fragment>
     <fragment
         android:id="@+id/dashboardFragment2"
         android:name="com.example.capstone.DashboardFragment"
         android:label="DashboardFragment" >
+        <argument
+            android:name="widgetType"
+            app:argType="string" />
         <action
             android:id="@+id/action_dashboardFragment2_to_addWidgetFragment"
             app:destination="@id/addWidgetFragment" />
@@ -25,7 +28,8 @@
             app:destination="@id/appSettingsFragment" />
         <action
             android:id="@+id/action_dashboardFragment2_to_widgetSettingsFragment"
-            app:destination="@id/widgetSettingsFragment" />
+            app:destination="@id/widgetSettingsFragment" >
+        </action>
     </fragment>
     <fragment
         android:id="@+id/appSettingsFragment"
@@ -38,8 +42,13 @@
         android:label="fragment_widget_settings"
         tools:layout="@layout/fragment_widget_settings" >
         <argument
-            android:name="widget_type"
-            app:argType="string" />
+            android:name="index"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+        <argument
+            android:name="widgetType"
+            app:argType="string"
+            android:defaultValue="none"/>
         <action
             android:id="@+id/action_widgetSettingsFragment_to_dashboardFragment2"
             app:destination="@id/dashboardFragment2" />

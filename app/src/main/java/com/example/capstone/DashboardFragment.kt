@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -17,9 +19,20 @@ import java.util.stream.IntStream.range
 class DashboardFragment : Fragment() {
     private lateinit var recycler: RecyclerView
     private lateinit var  recyclerGridAdapter: RecyclerGrid
+    private val args: WidgetSettingsFragmentArgs by navArgs()
     private val widgetViewModel: WidgetViewModel by activityViewModels()
 
+    private lateinit var swipeHelper: ItemTouchHelper
+
+    private lateinit var dragHelper: ItemTouchHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val widgetType = args.widgetType
+
+        if (widgetType != "none") {
+            addWidget(widgetType)
+        }
+
         //https://stackoverflow.com/questions/17401799/how-to-know-how-many-shared-preference-in-shared-preferences-in-android/17401994
         if (widgetViewModel.isStart) {
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
@@ -53,6 +66,20 @@ class DashboardFragment : Fragment() {
                 findNavController().navigate(R.id.action_dashboardFragment2_to_addWidgetFragment)
                 true
             }
+            R.id.move_widget -> {
+                if (!widgetViewModel.isMove) {
+                    swipeHelper.attachToRecyclerView(null)
+                    dragHelper.attachToRecyclerView(recycler)
+                    widgetViewModel.isMove = true
+                    Toast.makeText(requireContext(), "Widget Movement Enabled", Toast.LENGTH_SHORT).show()
+                } else {
+                    swipeHelper.attachToRecyclerView(recycler)
+                    dragHelper.attachToRecyclerView(null)
+                    widgetViewModel.isMove = false
+                    Toast.makeText(requireContext(), "Widget Movement Disabled", Toast.LENGTH_SHORT).show()
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -73,20 +100,17 @@ class DashboardFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 Log.d("test", "SwipeBefore" + widgetViewModel.widgetList.toString())
                 if (direction == ItemTouchHelper.LEFT) {
-                    recyclerGridAdapter.deleteItem(viewHolder.adapterPosition)
+                    recyclerGridAdapter.deleteItem(viewHolder.absoluteAdapterPosition)
                     Log.d("test", "SwipeAfter" + widgetViewModel.widgetList.toString())
                 } else if (direction == ItemTouchHelper.RIGHT) {
-                    val widgetSwiped = widgetViewModel.widgetList[viewHolder.adapterPosition]
+                    val widgetSwiped = widgetViewModel.widgetList[viewHolder.absoluteAdapterPosition]
 
-                    val action = DashboardFragmentDirections.actionDashboardFragment2ToWidgetSettingsFragment("*$widgetSwiped")
+                    val action = DashboardFragmentDirections.actionDashboardFragment2ToWidgetSettingsFragment(viewHolder.absoluteAdapterPosition, widgetSwiped)
                     view.findNavController().navigate(action)
 
                 }
             }
         }
-
-        val swipeHelper = ItemTouchHelper(swipedDelete)
-        swipeHelper.attachToRecyclerView(recycler)
 
         val dragWidgets = object : DragToMoveWidgets() {
             override fun onMove(
@@ -95,10 +119,12 @@ class DashboardFragment : Fragment() {
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 val adapter = recycler.adapter as RecyclerGrid
-                val from = viewHolder.adapterPosition
-                val to = target.adapterPosition
+                val from = viewHolder.absoluteAdapterPosition
+                val to = target.absoluteAdapterPosition
 
                 Collections.swap(widgetViewModel.widgetList, from, to)
+                Collections.swap(widgetViewModel.settingsList, from, to)
+                Collections.swap(widgetViewModel.keyList, from, to)
 
                 adapter.notifyItemMoved(from, to)
 
@@ -106,9 +132,63 @@ class DashboardFragment : Fragment() {
             }
         }
 
-        val dragHelper = ItemTouchHelper(dragWidgets)
-        dragHelper.attachToRecyclerView(recycler)
+        swipeHelper = ItemTouchHelper(swipedDelete)
+        dragHelper = ItemTouchHelper(dragWidgets)
+
+        swipeHelper.attachToRecyclerView(recycler)
 
         return view
+    }
+
+    private fun addWidget(widget: String) {
+        when (widget) {
+            "Weather Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.weatherWidget)
+                widgetViewModel.settingsList.add("weatherSettings.json")
+                widgetViewModel.keyList.add(generateKey())
+            }
+            "Time Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.timeWidget)
+                widgetViewModel.settingsList.add("weatherSettings.json")
+                widgetViewModel.keyList.add(generateKey())
+            }
+            "Chart Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.chartWidget)
+                widgetViewModel.settingsList.add("weatherSettings.json")
+                widgetViewModel.keyList.add(generateKey())
+            }
+            "News Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.newsWidget)
+                widgetViewModel.settingsList.add("weatherSettings.json")
+                widgetViewModel.keyList.add(generateKey())
+            }
+            "Finance Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.financeWidget)
+                widgetViewModel.settingsList.add("weatherSettings.json")
+                widgetViewModel.keyList.add(generateKey())
+            }
+            "MQTT Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.mqttWidget)
+                widgetViewModel.settingsList.add("weatherSettings.json")
+                widgetViewModel.keyList.add(generateKey())
+
+            }
+        }
+    }
+
+    private fun generateKey() : String {
+        val keySize = 10
+
+        var key = "_"
+
+        val alphaNumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+        for (i in 1..keySize) {
+            val index = (alphaNumerics.indices).random()
+
+            key += alphaNumerics[index]
+        }
+
+        return key
     }
 }
