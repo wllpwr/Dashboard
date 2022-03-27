@@ -42,7 +42,7 @@ class WidgetSettingsFragment : PreferenceFragmentCompat() {
 
             preference.title = title
             preference.summary = summary
-            preference.key = name + key
+            preference.key = name + "_" + key
 
             screen.addPreference(preference)
         }

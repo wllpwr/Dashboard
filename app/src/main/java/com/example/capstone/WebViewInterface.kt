@@ -10,10 +10,4 @@ class WebViewInterface(private val context: Context) {
             it.write(jsonString.toByteArray())
         }
     }
-
-    @JavascriptInterface
-    fun readJson(fileName: String) : String {
-        return context.openFileInput("weatherSettings.json").bufferedReader().readText()
-    }
-
 }

@@ -26,7 +26,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         with (sharedPref.edit()) {
             clear()
             for ((count, widget) in viewModel.widgetList.withIndex()) {
-                putString("$count", widget)
+                putString("$count" + "widget", widget)
+                putString("$count" + "settings", viewModel.settingsList[count])
+                putString("$count" + "key", viewModel.keyList[count])
             }
             apply()
             Log.d("test", "onStopSharedPref" + sharedPref.all.toString())

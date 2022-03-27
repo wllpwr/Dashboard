@@ -1,17 +1,21 @@
 package com.example.capstone
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.webkit.WebViewAssetLoader
+import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewClientCompat
 
+
 @SuppressLint("SetJavaScriptEnabled")
-class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
+class RecyclerGrid(private var dataList: ArrayList<String>, private var keyList: ArrayList<String>, private var context: Context): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
 
     private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClientCompat() {
@@ -52,19 +56,32 @@ class RecyclerGrid(private var dataList: ArrayList<String>): RecyclerView.Adapte
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
-        holder.webView.addJavascriptInterface(WebViewInterface(holder.webView.context),"Android")
+        holder.webView.addJavascriptInterface(WebViewInterface(holder.webView.context), "Android")
 
         holder.webView.webChromeClient = object : WebChromeClient() {
             override fun onConsoleMessage(message: ConsoleMessage): Boolean {
-                Log.d("test1", "${message.message()} -- From line " +
-                        "${message.lineNumber()} of ${message.sourceId()}")
+                Log.d(
+                    "test2", "${message.message()} -- From line " +
+                            "${message.lineNumber()}"
+                )
                 return true
             }
         }
 
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences = sharedPrefs.all
+
+        val keyValueOfPreference = preferences.filterKeys { it.contains(keyList[position]) }
+
+        for (keyValue in keyValueOfPreference) {
+            val keyValueArray = keyValue.toString().split("=")
+            val newKey = keyValueArray[0].split("_")[0]
+            val cookie = newKey + "=" + keyValueArray[1]
+           CookieManager.getInstance().setCookie(dataList[position], cookie)
+        }
 
         val assetLoader = WebViewAssetLoader.Builder()
-            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(holder.webView.context))
+            .addPathHandler("/assets/", AssetsPathHandler(context))
             .build()
         holder.webView.webViewClient = LocalContentWebViewClient(assetLoader)
 

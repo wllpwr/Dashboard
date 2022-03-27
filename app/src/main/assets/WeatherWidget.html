@@ -43,7 +43,24 @@
       Android.createAndWriteToJson(fileName, jsonString);
   }
 
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
   window.onload = function getCurrentSettings() {
+
     var jsonString = '[{"type": "editText", "name": "zipCode", "title": "Zip Code", "summary": "Enter the Zip Code of the location you want the weather from"}, {"type": "switch", "name": "celsius", "title": "Celsius", "summary": "Change temperature to be displayed as Celsius"}]'
 
     var fileName = "weatherSettings.json"
@@ -52,7 +69,11 @@
 
     var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
     var unit = "imperial";
-    var zipCode = "05401";
+    var zipCode = getCookie("zipCode");
+
+    if (getCookie("celsius") == "true") {
+      unit = "metric"
+    }
 
     document.getElementById("location").innerHTML = zipCode
 

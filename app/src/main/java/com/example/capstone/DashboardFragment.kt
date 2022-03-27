@@ -4,15 +4,19 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.webkit.CookieManager
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.widget.view.*
 import java.util.*
 import java.util.stream.IntStream.range
 
@@ -38,11 +42,19 @@ class DashboardFragment : Fragment() {
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
             Log.d("test", "onCreateSharedPref" + sharedPref.all.toString())
             Log.d("test", "onCreateViewModelBefore" + widgetViewModel.widgetList.toString())
-            val sharedPrefSize = sharedPref.all.size
+            val sharedPrefSize = sharedPref.all.size / 3
             for (index in range(0, sharedPrefSize)) {
-                val widget = sharedPref.getString(index.toString(), null)
+                val widget = sharedPref.getString(index.toString() + "widget", null)
                 if (widget != null) {
                     widgetViewModel.widgetList.add(widget)
+                }
+                val settings = sharedPref.getString(index.toString() + "settings", null)
+                if (settings != null) {
+                    widgetViewModel.settingsList.add(settings)
+                }
+                val key = sharedPref.getString(index.toString() + "key", null)
+                if (key != null) {
+                    widgetViewModel.keyList.add(key)
                 }
             }
             Log.d("test", "onCreateViewModelAfter" + widgetViewModel.widgetList.toString())
@@ -93,7 +105,7 @@ class DashboardFragment : Fragment() {
 
         recycler = view.findViewById(R.id.recyclerView)
         recycler.layoutManager = GridLayoutManager(context,2)
-        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList)
+        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.keyList, requireContext())
         recycler.adapter = recyclerGridAdapter
 
         val swipedDelete = object : SwipeToDelete(requireContext()) {
@@ -179,7 +191,7 @@ class DashboardFragment : Fragment() {
     private fun generateKey() : String {
         val keySize = 10
 
-        var key = "_"
+        var key = ""
 
         val alphaNumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
