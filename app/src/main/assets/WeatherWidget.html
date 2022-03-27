@@ -68,12 +68,14 @@
     sendMessage(fileName, jsonString)
 
     var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
-    var unit = "imperial";
     var zipCode = getCookie("zipCode");
+    var unit = "imperial";
 
     if (getCookie("celsius") == "true") {
-      unit = "metric"
+     unit = "metric"
     }
+
+    //console.log(document.cookie)
 
     document.getElementById("location").innerHTML = zipCode
 
@@ -84,7 +86,6 @@
       var temp = document.getElementById("temp");
       data= JSON.stringify(data);
       var obj = JSON.parse(data);
-      console.log(obj.message);
       temp.textContent = obj.main.temp;
      })
   }

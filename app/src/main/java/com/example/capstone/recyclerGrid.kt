@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewClientCompat
+import java.io.File
 
 
 @SuppressLint("SetJavaScriptEnabled")
-class RecyclerGrid(private var dataList: ArrayList<String>, private var keyList: ArrayList<String>, private var context: Context): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
+class RecyclerGrid(private var dataList: ArrayList<String>, private var settingsList: ArrayList<String>, private var keyList: ArrayList<String>, private var context: Context): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
 
     private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClientCompat() {
@@ -30,6 +31,8 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var keyList:
 
     fun deleteItem(index: Int) {
         dataList.removeAt(index)
+        keyList.removeAt(index)
+        settingsList.removeAt(index)
         notifyDataSetChanged()
     }
 
@@ -53,6 +56,7 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var keyList:
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Get the data model based on position
         val data = dataList[position]
+        val key = keyList[position]
 
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
@@ -71,17 +75,22 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var keyList:
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         val preferences = sharedPrefs.all
 
-        val keyValueOfPreference = preferences.filterKeys { it.contains(keyList[position]) }
+        val keyValueOfPreference = preferences.filterKeys { it.contains(key) }
 
         for (keyValue in keyValueOfPreference) {
             val keyValueArray = keyValue.toString().split("=")
             val newKey = keyValueArray[0].split("_")[0]
             val cookie = newKey + "=" + keyValueArray[1]
-           CookieManager.getInstance().setCookie(dataList[position], cookie)
+            CookieManager.getInstance().setCookie(data, cookie)
         }
 
+        val widgetDir = File(context.filesDir, "widget")
+        if (!widgetDir.exists()) {
+            widgetDir.mkdir()
+        }
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", AssetsPathHandler(context))
+            .addPathHandler("/widget/", WebViewAssetLoader.InternalStoragePathHandler(context, widgetDir))
             .build()
         holder.webView.webViewClient = LocalContentWebViewClient(assetLoader)
 

@@ -11,11 +11,13 @@ class WidgetViewModel : ViewModel() {
     var isStart = true
     var isMove = false
 
-    val weatherWidget = "https://appassets.androidplatform.net/assets/WeatherWidget.html"
+    val weatherWidget = "WeatherWidget.html"
 
-    val timeWidget = "https://appassets.androidplatform.net/assets/TimeWidget.html"
-    val chartWidget = "https://appassets.androidplatform.net/assets/ChartWidget.html"
-    val newsWidget = "https://appassets.androidplatform.net/assets/reddit.html"
-    val financeWidget = "https://appassets.androidplatform.net/assets/stocks.html"
-    val mqttWidget = "https://appassets.androidplatform.net/assets/mqtt.html"
+    val timeWidget = "TimeWidget.html"
+    val chartWidget = "ChartWidget.html"
+    val newsWidget = "reddit.html"
+    val financeWidget = "stocks.html"
+    val mqttWidget = "mqtt.html"
+
+    val path = "https://appassets.androidplatform.net/widget/"
 }

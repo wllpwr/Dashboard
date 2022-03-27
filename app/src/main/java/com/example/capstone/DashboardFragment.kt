@@ -4,19 +4,16 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.webkit.CookieManager
-import android.webkit.WebView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.widget.view.*
+import java.io.*
 import java.util.*
 import java.util.stream.IntStream.range
 
@@ -105,8 +102,10 @@ class DashboardFragment : Fragment() {
 
         recycler = view.findViewById(R.id.recyclerView)
         recycler.layoutManager = GridLayoutManager(context,2)
-        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.keyList, requireContext())
+        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.settingsList, widgetViewModel.keyList, requireContext())
         recycler.adapter = recyclerGridAdapter
+
+
 
         val swipedDelete = object : SwipeToDelete(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -153,34 +152,41 @@ class DashboardFragment : Fragment() {
     }
 
     private fun addWidget(widget: String) {
+        val key = generateKey()
+
         when (widget) {
             "Weather Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.weatherWidget)
+                requireContext().assets.open(widgetViewModel.weatherWidget).read()
+                val splitFileExtension = widgetViewModel.weatherWidget.split(".")
+
+                createAndWriteToWidgetDir( requireContext(),splitFileExtension[0] + key + "." + splitFileExtension[1], readAssetFile(widgetViewModel.weatherWidget))
+
+                widgetViewModel.widgetList.add(widgetViewModel.path + splitFileExtension[0] + key + "." + splitFileExtension[1])
                 widgetViewModel.settingsList.add("weatherSettings.json")
-                widgetViewModel.keyList.add(generateKey())
+                widgetViewModel.keyList.add(key)
             }
             "Time Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.timeWidget)
+                widgetViewModel.widgetList.add(widgetViewModel.path + widgetViewModel.timeWidget)
                 widgetViewModel.settingsList.add("weatherSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
             "Chart Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.chartWidget)
+                widgetViewModel.widgetList.add(widgetViewModel.path + widgetViewModel.chartWidget)
                 widgetViewModel.settingsList.add("weatherSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
             "News Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.newsWidget)
+                widgetViewModel.widgetList.add(widgetViewModel.path + widgetViewModel.newsWidget)
                 widgetViewModel.settingsList.add("weatherSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
             "Finance Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.financeWidget)
+                widgetViewModel.widgetList.add(widgetViewModel.path + widgetViewModel.financeWidget)
                 widgetViewModel.settingsList.add("weatherSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
             "MQTT Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.mqttWidget)
+                widgetViewModel.widgetList.add(widgetViewModel.path + widgetViewModel.mqttWidget)
                 widgetViewModel.settingsList.add("weatherSettings.json")
                 widgetViewModel.keyList.add(generateKey())
 
@@ -189,18 +195,40 @@ class DashboardFragment : Fragment() {
     }
 
     private fun generateKey() : String {
-        val keySize = 10
-
-        var key = ""
-
         val alphaNumerics = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        var key = ""
+        val keySize = 10
+        while (widgetViewModel.keyList.contains(key) || key == "") {
+            for (i in 1..keySize) {
+                val index = (alphaNumerics.indices).random()
 
-        for (i in 1..keySize) {
-            val index = (alphaNumerics.indices).random()
-
-            key += alphaNumerics[index]
+                key += alphaNumerics[index]
+            }
         }
 
         return key
+    }
+
+    //https://stackoverflow.com/questions/44587187/android-how-to-write-a-file-to-internal-storage
+    private fun createAndWriteToWidgetDir(context: Context, fileName: String, widgetCode: String) {
+        val widgetDir = File(context.filesDir, "widget")
+        if (!widgetDir.exists()) {
+            widgetDir.mkdir()
+        }
+
+        try {
+            val widgetFile = File(widgetDir, fileName)
+            val writer = FileWriter(widgetFile)
+            writer.append(widgetCode)
+            writer.flush()
+            writer.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    // https://stackoverflow.com/questions/9544737/read-file-from-assets
+    private fun readAssetFile(fileName: String): String {
+        return requireContext().assets.open(fileName).bufferedReader().use { it.readText() }
     }
 }
