@@ -1,6 +1,7 @@
 package com.example.capstone
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,7 +17,6 @@ class WidgetSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val index = args.index
 
-        val widget = widgetViewModel.widgetList[index]
         val settingsFileName = widgetViewModel.settingsList[index]
         val key = widgetViewModel.keyList[index]
 
@@ -38,6 +38,19 @@ class WidgetSettingsFragment : PreferenceFragmentCompat() {
             when(type) {
                 "editText" -> preference = EditTextPreference(prefContext)
                 "switch" -> preference = SwitchPreferenceCompat(prefContext)
+                "list" -> {
+                    val list = jsonArray.getJSONObject(i).getJSONArray("list")
+                    var listArray = arrayOfNulls<String>(list.length())
+                    for (j in 0 until list.length()) {
+                        listArray[j] = list[j].toString()
+                    }
+                    preference = ListPreference(prefContext)
+
+                    preference.entries = listArray
+                    preference.entryValues = listArray
+
+                }
+
             }
 
             preference.title = title

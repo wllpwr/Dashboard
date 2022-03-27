@@ -19,7 +19,20 @@
   <body>
     <div id="timespot"></div>
     <script>
-        window.onload = function() { setInterval(timeNow, 400); }
+        function sendMessage(fileName, jsonString) {
+          Android.createAndWriteToJson(fileName, jsonString);
+        }
+
+        window.onload = function() {
+          setInterval(timeNow, 400);
+
+          console.log("test")
+          var jsonString = '[{"type": "list", "name": "timeZone", "title": "Time Zone", "summary": "Pick a Time Zone", "list": ["est", "pst"]}, {"type": "switch", "name": "military", "title": "Military Time", "summary": "display as Military Time"}]'
+
+          var fileName = "timeSettings.json"
+
+          sendMessage(fileName, jsonString)
+        }
         
         function addZero(i) {
             if (i < 10) {i = "0" + i}
@@ -43,7 +56,7 @@
             let s = addZero(d.getSeconds());
             let time = h + ":" + m + ":" + s;
             timeElement.textContent = time;
-            console.log(time);
+           // console.log(time);
         }
     </script> 
   </body>

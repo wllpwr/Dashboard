@@ -105,7 +105,7 @@ class DashboardFragment : Fragment() {
 
         recycler = view.findViewById(R.id.recyclerView)
         recycler.layoutManager = GridLayoutManager(context,2)
-        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.keyList, requireContext())
+        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.settingsList ,widgetViewModel.keyList, requireContext())
         recycler.adapter = recyclerGridAdapter
 
         val swipedDelete = object : SwipeToDelete(requireContext()) {
@@ -161,7 +161,7 @@ class DashboardFragment : Fragment() {
             }
             "Time Widget" -> {
                 widgetViewModel.widgetList.add(widgetViewModel.timeWidget)
-                widgetViewModel.settingsList.add("weatherSettings.json")
+                widgetViewModel.settingsList.add("timeSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
             "Chart Widget" -> {
