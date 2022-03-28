@@ -18,13 +18,19 @@ import androidx.webkit.WebViewClientCompat
 class RecyclerGrid(private var dataList: ArrayList<String>, private var settingsList: ArrayList<String>, private var keyList: ArrayList<String>, private var context: Context): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
 
-    private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader) : WebViewClientCompat() {
+    private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader, private val widgetSettings: String) : WebViewClientCompat() {
         //@RequiresApi(21)
         override fun shouldInterceptRequest(
             view: WebView,
             request: WebResourceRequest
         ): WebResourceResponse? {
             return assetLoader.shouldInterceptRequest(request.url)
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+
+            view?.evaluateJavascript("javascript:getData('$widgetSettings');", null)
         }
     }
 
@@ -53,9 +59,6 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // Get the data model based on position
-        val data = dataList[position]
-
         // Set item views based on your views and data model
         holder.webView.settings.javaScriptEnabled = true
         holder.webView.addJavascriptInterface(WebViewInterface(holder.webView.context), "Android")
@@ -70,25 +73,29 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
             }
         }
 
-        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val preferences = sharedPrefs.all
-
-        val keyValueOfPreference = preferences.filterKeys { it.contains(keyList[position]) }
-
-        for (keyValue in keyValueOfPreference) {
-            val keyValueArray = keyValue.toString().split("=")
-            val newKey = keyValueArray[0].split("_")[0]
-            val cookie = newKey + "=" + keyValueArray[1]
-           CookieManager.getInstance().setCookie(dataList[position], cookie)
-        }
-
         val assetLoader = WebViewAssetLoader.Builder()
             .addPathHandler("/assets/", AssetsPathHandler(context))
             .build()
-        holder.webView.webViewClient = LocalContentWebViewClient(assetLoader)
+        holder.webView.webViewClient = LocalContentWebViewClient(assetLoader, getWidgetSettings(keyList[position]))
 
-        holder.webView.loadUrl(data)
+        holder.webView.loadUrl(dataList[position])
     }
 
     override fun getItemCount() = dataList.size
+
+    private fun getWidgetSettings(key: String): String {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences = sharedPrefs.all
+
+        val keyValueOfPreference = preferences.filterKeys { it.contains(key) }
+
+        var widgetData = ""
+        for (keyValue in keyValueOfPreference) {
+            val keyValueArray = keyValue.toString().split("=")
+            val newKey = keyValueArray[0].split("_")[0]
+            widgetData += newKey + "=" + keyValueArray[1] + ", "
+        }
+
+        return widgetData
+    }
 }

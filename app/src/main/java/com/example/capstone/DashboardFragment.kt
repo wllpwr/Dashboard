@@ -7,6 +7,7 @@ import android.view.*
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -23,6 +24,7 @@ import java.util.stream.IntStream.range
 class DashboardFragment : Fragment() {
     private lateinit var recycler: RecyclerView
     private lateinit var  recyclerGridAdapter: RecyclerGrid
+    private lateinit var gridLayoutManager: GridLayoutManager
     private val args: WidgetSettingsFragmentArgs by navArgs()
     private val widgetViewModel: WidgetViewModel by activityViewModels()
 
@@ -104,7 +106,8 @@ class DashboardFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragement_dashboard, container, false)
 
         recycler = view.findViewById(R.id.recyclerView)
-        recycler.layoutManager = GridLayoutManager(context,2)
+        gridLayoutManager = GridLayoutManager(context,2)
+        recycler.layoutManager = gridLayoutManager
         recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.settingsList ,widgetViewModel.keyList, requireContext())
         recycler.adapter = recyclerGridAdapter
 
@@ -203,4 +206,21 @@ class DashboardFragment : Fragment() {
 
         return key
     }
+
+    private fun getWidgetSettings(key: String): String {
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val preferences = sharedPrefs.all
+
+        val keyValueOfPreference = preferences.filterKeys { it.contains(key) }
+
+        var widgetData = ""
+        for (keyValue in keyValueOfPreference) {
+            val keyValueArray = keyValue.toString().split("=")
+            val newKey = keyValueArray[0].split("_")[0]
+            widgetData += newKey + "=" + keyValueArray[1] + ", "
+        }
+
+        return widgetData
+    }
+
 }

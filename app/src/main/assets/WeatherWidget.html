@@ -59,7 +59,15 @@
     return "";
   }
 
-  window.onload = function getCurrentSettings() {
+  var settings = ""
+
+  function getData(data) {
+    console.log(data)
+    settings = data
+    displayData()
+  }
+
+  function displayData() {
 
     var jsonString = '[{"type": "editText", "name": "zipCode", "title": "Zip Code", "summary": "Enter the Zip Code of the location you want the weather from"}, {"type": "switch", "name": "celsius", "title": "Celsius", "summary": "Change temperature to be displayed as Celsius"}]'
 
@@ -67,11 +75,13 @@
 
     sendMessage(fileName, jsonString)
 
+    var splitSettings = settings.split(', ')
+
     var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
     var unit = "imperial";
-    var zipCode = getCookie("zipCode");
+    var zipCode = splitSettings[0].split('=')[1];
 
-    if (getCookie("celsius") == "true") {
+    if (splitSettings[1].split('=')[1] == "true") {
       unit = "metric"
     }
 
@@ -81,11 +91,9 @@
     )
     .then(response => response.json())
     .then (data => {
-      var temp = document.getElementById("temp");
       data= JSON.stringify(data);
       var obj = JSON.parse(data);
-      console.log(obj.message);
-      temp.textContent = obj.main.temp;
+      document.getElementById("temp").textContent = obj.main.temp;
      })
   }
 
