@@ -17,6 +17,8 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.widget.view.*
 import java.util.*
 import java.util.stream.IntStream.range
@@ -25,6 +27,8 @@ class DashboardFragment : Fragment() {
     private lateinit var recycler: RecyclerView
     private lateinit var  recyclerGridAdapter: RecyclerGrid
     private lateinit var gridLayoutManager: GridLayoutManager
+    private lateinit var fab: FloatingActionButton
+    private lateinit var bottomAppBar: BottomAppBar
     private val args: WidgetSettingsFragmentArgs by navArgs()
     private val widgetViewModel: WidgetViewModel by activityViewModels()
 
@@ -62,22 +66,13 @@ class DashboardFragment : Fragment() {
             Log.d("test", "onCreateViewModelAfter" + widgetViewModel.widgetList.toString())
             widgetViewModel.isStart = false
         }
-        setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.core_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.app_settings -> {
                 findNavController().navigate(R.id.action_dashboardFragment2_to_appSettingsFragment)
-                true
-            }
-            R.id.add_widget -> {
-                findNavController().navigate(R.id.action_dashboardFragment2_to_addWidgetFragment)
                 true
             }
             R.id.move_widget -> {
@@ -110,6 +105,36 @@ class DashboardFragment : Fragment() {
         recycler.layoutManager = gridLayoutManager
         recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.settingsList ,widgetViewModel.keyList, requireContext())
         recycler.adapter = recyclerGridAdapter
+
+        fab = view.findViewById(R.id.fab)
+        fab.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment2_to_addWidgetFragment)
+        }
+
+        bottomAppBar = view.findViewById(R.id.bottomAppBar)
+        bottomAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.app_settings -> {
+                    findNavController().navigate(R.id.action_dashboardFragment2_to_appSettingsFragment)
+                    true
+                }
+                R.id.move_widget -> {
+                    if (!widgetViewModel.isMove) {
+                        swipeHelper.attachToRecyclerView(null)
+                        dragHelper.attachToRecyclerView(recycler)
+                        widgetViewModel.isMove = true
+                        Toast.makeText(requireContext(), "Widget Movement Enabled", Toast.LENGTH_SHORT).show()
+                    } else {
+                        swipeHelper.attachToRecyclerView(recycler)
+                        dragHelper.attachToRecyclerView(null)
+                        widgetViewModel.isMove = false
+                        Toast.makeText(requireContext(), "Widget Movement Disabled", Toast.LENGTH_SHORT).show()
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
 
         val swipedDelete = object : SwipeToDelete(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
