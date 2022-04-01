@@ -32,7 +32,7 @@ abstract class SwipeToDelete(context: Context) : ItemTouchHelper.SimpleCallback(
         isCurrentlyActive: Boolean
     ) {
 
-        //https://github.com/xabaras/RecyclerViewSwipeDecorator
+        // https://github.com/xabaras/RecyclerViewSwipeDecorator
         RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX / 3, dY, actionState, isCurrentlyActive)
             .addSwipeLeftBackgroundColor(deleteColor)
             .addSwipeLeftActionIcon(deleteIcon)

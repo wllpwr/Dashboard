@@ -1,12 +1,10 @@
 package com.example.capstone
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.preference.*
-import kotlinx.android.synthetic.main.fragment_widget_settings.*
 import org.json.JSONArray
 import org.json.JSONTokener
 

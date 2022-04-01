@@ -22,7 +22,5 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/add_button"
         app:layout_anchor="@id/bottomAppBar"
-        app:tint="@color/white"
-        app:backgroundTint="@color/black"
         app:srcCompat="@drawable/ic_add_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,4 +15,10 @@
         app:entries="@array/font"
         app:entryValues="@array/font"
         app:icon="@drawable/ic_baseline_font_download_24"/>
+
+    <Preference
+        app:key = "ConfirmButton"
+        app:title = "Confirm"
+        app:summary = "Update Settings of App"
+        />
 </PreferenceScreen>

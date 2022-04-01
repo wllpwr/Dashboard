@@ -4,10 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.webkit.CookieManager
-import android.webkit.WebView
 import android.widget.Toast
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
@@ -17,18 +14,13 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.widget.view.*
+import com.example.capstone.databinding.FragementDashboardBinding
 import java.util.*
 import java.util.stream.IntStream.range
 
 class DashboardFragment : Fragment() {
-    private lateinit var recycler: RecyclerView
     private lateinit var  recyclerGridAdapter: RecyclerGrid
     private lateinit var gridLayoutManager: GridLayoutManager
-    private lateinit var fab: FloatingActionButton
-    private lateinit var bottomAppBar: BottomAppBar
     private val args: WidgetSettingsFragmentArgs by navArgs()
     private val widgetViewModel: WidgetViewModel by activityViewModels()
 
@@ -78,11 +70,11 @@ class DashboardFragment : Fragment() {
             R.id.move_widget -> {
                 if (!widgetViewModel.isMove) {
                     swipeHelper.attachToRecyclerView(null)
-                    dragHelper.attachToRecyclerView(recycler)
+                    dragHelper.attachToRecyclerView(binding.recyclerView)
                     widgetViewModel.isMove = true
                     Toast.makeText(requireContext(), "Widget Movement Enabled", Toast.LENGTH_SHORT).show()
                 } else {
-                    swipeHelper.attachToRecyclerView(recycler)
+                    swipeHelper.attachToRecyclerView(binding.recyclerView)
                     dragHelper.attachToRecyclerView(null)
                     widgetViewModel.isMove = false
                     Toast.makeText(requireContext(), "Widget Movement Disabled", Toast.LENGTH_SHORT).show()
@@ -93,26 +85,27 @@ class DashboardFragment : Fragment() {
         }
     }
 
+    private var _binding: FragementDashboardBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragement_dashboard, container, false)
+    ): View {
+        _binding = FragementDashboardBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        recycler = view.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(context,2)
-        recycler.layoutManager = gridLayoutManager
+        binding.recyclerView.layoutManager = gridLayoutManager
         recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.settingsList ,widgetViewModel.keyList, requireContext())
-        recycler.adapter = recyclerGridAdapter
+        binding.recyclerView.adapter = recyclerGridAdapter
 
-        fab = view.findViewById(R.id.fab)
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment2_to_addWidgetFragment)
         }
 
-        bottomAppBar = view.findViewById(R.id.bottomAppBar)
-        bottomAppBar.setOnMenuItemClickListener { menuItem ->
+        binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.app_settings -> {
                     findNavController().navigate(R.id.action_dashboardFragment2_to_appSettingsFragment)
@@ -121,11 +114,11 @@ class DashboardFragment : Fragment() {
                 R.id.move_widget -> {
                     if (!widgetViewModel.isMove) {
                         swipeHelper.attachToRecyclerView(null)
-                        dragHelper.attachToRecyclerView(recycler)
+                        dragHelper.attachToRecyclerView(binding.recyclerView)
                         widgetViewModel.isMove = true
                         Toast.makeText(requireContext(), "Widget Movement Enabled", Toast.LENGTH_SHORT).show()
                     } else {
-                        swipeHelper.attachToRecyclerView(recycler)
+                        swipeHelper.attachToRecyclerView(binding.recyclerView)
                         dragHelper.attachToRecyclerView(null)
                         widgetViewModel.isMove = false
                         Toast.makeText(requireContext(), "Widget Movement Disabled", Toast.LENGTH_SHORT).show()
@@ -158,7 +151,7 @@ class DashboardFragment : Fragment() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                val adapter = recycler.adapter as RecyclerGrid
+                val adapter = binding.recyclerView.adapter as RecyclerGrid
                 val from = viewHolder.absoluteAdapterPosition
                 val to = target.absoluteAdapterPosition
 
@@ -175,7 +168,7 @@ class DashboardFragment : Fragment() {
         swipeHelper = ItemTouchHelper(swipedDelete)
         dragHelper = ItemTouchHelper(dragWidgets)
 
-        swipeHelper.attachToRecyclerView(recycler)
+        swipeHelper.attachToRecyclerView(binding.recyclerView)
 
         return view
     }
@@ -248,4 +241,8 @@ class DashboardFragment : Fragment() {
         return widgetData
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

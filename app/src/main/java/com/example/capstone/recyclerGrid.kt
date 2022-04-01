@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import androidx.preference.PreferenceManager
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewClientCompat
+import com.example.capstone.databinding.WidgetBinding
 
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -41,13 +41,11 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var webView: WebView = itemView.findViewById(R.id.web_view)
-    }
+    class ViewHolder(val binding: WidgetBinding) : RecyclerView.ViewHolder(binding.root) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.widget, parent, false)
+        val binding = WidgetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = binding.root
 
         //https://stackoverflow.com/questions/35221566/how-to-set-the-height-of-an-item-row-in-gridlayoutmanager
         view.post {
@@ -55,30 +53,37 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
             view.requestLayout()
         }
 
-        return ViewHolder(view)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // Set item views based on your views and data model
-        holder.webView.settings.javaScriptEnabled = true
-        holder.webView.addJavascriptInterface(WebViewInterface(holder.webView.context), "Android")
+        with(holder) {
+            // Set item views based on your views and data model
+            binding.webView.settings.javaScriptEnabled = true
+            binding.webView.addJavascriptInterface(WebViewInterface(binding.webView.context), "Android")
 
-        holder.webView.webChromeClient = object : WebChromeClient() {
-            override fun onConsoleMessage(message: ConsoleMessage): Boolean {
-                Log.d(
-                    "test2", "${message.message()} -- From line " +
-                            "${message.lineNumber()}"
-                )
-                return true
+            binding.webView.webChromeClient = object : WebChromeClient() {
+                override fun onConsoleMessage(message: ConsoleMessage): Boolean {
+                    Log.d(
+                        "test2", "${message.message()} -- From line " +
+                                "${message.lineNumber()}"
+                    )
+                    return true
+                }
+            }
+
+            val assetLoader = WebViewAssetLoader.Builder()
+                .addPathHandler("/assets/", AssetsPathHandler(context))
+                .build()
+
+            with(keyList[position]) {
+                binding.webView.webViewClient = LocalContentWebViewClient(assetLoader, getWidgetSettings(this))
+            }
+
+            with(dataList[position]) {
+                binding.webView.loadUrl(this)
             }
         }
-
-        val assetLoader = WebViewAssetLoader.Builder()
-            .addPathHandler("/assets/", AssetsPathHandler(context))
-            .build()
-        holder.webView.webViewClient = LocalContentWebViewClient(assetLoader, getWidgetSettings(keyList[position]))
-
-        holder.webView.loadUrl(dataList[position])
     }
 
     override fun getItemCount() = dataList.size
