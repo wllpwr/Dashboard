@@ -68,20 +68,23 @@
   }
 
   function displayData() {
-
     var jsonString = '[{"type": "editText", "name": "zipCode", "title": "Zip Code", "summary": "Enter the Zip Code of the location you want the weather from"}, {"type": "switch", "name": "celsius", "title": "Celsius", "summary": "Change temperature to be displayed as Celsius"}]'
 
     var fileName = "weatherSettings.json"
 
     sendMessage(fileName, jsonString)
 
+    var settingsObj = JSON.parse(settings)
+
+    console.log(settingsObj.zipCode)
+
     var splitSettings = settings.split(', ')
 
     var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
     var unit = "imperial";
-    var zipCode = splitSettings[0].split('=')[1];
+    var zipCode = settingsObj.zipCode
 
-    if (splitSettings[1].split('=')[1] == "true") {
+    if (settingsObj.celsius == "true") {
       unit = "metric"
     }
 
@@ -91,7 +94,7 @@
     )
     .then(response => response.json())
     .then (data => {
-      data= JSON.stringify(data);
+      data = JSON.stringify(data);
       var obj = JSON.parse(data);
       document.getElementById("temp").textContent = obj.main.temp;
      })

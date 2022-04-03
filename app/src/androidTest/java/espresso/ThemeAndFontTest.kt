@@ -1,6 +1,5 @@
 package espresso
 
-import android.util.TypedValue
 import androidx.preference.PreferenceManager
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -12,12 +11,10 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.capstone.MainActivity
 import com.example.capstone.R
-import com.google.android.material.color.MaterialColors
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.String
 
 
 @RunWith(AndroidJUnit4ClassRunner::class)
@@ -56,9 +53,7 @@ class ThemeAndFontTest {
 
         assertEquals(themePref, "Blue")
 
-        val blue = 2712319
-
-        assertEquals(blue, MaterialColors.getColor(context, android.R.attr.colorPrimary, "No Color"))
+        onView(withId(R.id.textViewToTest)).check(matches(withText(R.style.ThemeBlueRoboto.toString())))
     }
 
     @Test
@@ -88,6 +83,8 @@ class ThemeAndFontTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val font = PreferenceManager.getDefaultSharedPreferences(context).all["font_style"]
 
-        assertEquals(font, "Roboto Mono")
+        assertEquals("Roboto Mono", font)
+
+        onView(withId(R.id.textViewToTest)).check(matches(withText(R.style.ThemeBlueRobotoMono.toString())))
     }
 }

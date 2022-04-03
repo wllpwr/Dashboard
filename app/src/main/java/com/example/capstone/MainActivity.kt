@@ -24,10 +24,8 @@ class MainActivity : AppCompatActivity() {
         val font = PreferenceManager.getDefaultSharedPreferences(this).all["font_style"]
 
         if (theme != null && font != null) {
-            Log.d("test2", "$theme $font")
             changeTheme(theme as String, font as String)
         }
-
 
         setContentView(view)
 
@@ -55,18 +53,20 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    fun changeTheme(theme: String, font: String) : String {
+    private fun changeTheme(theme: String, font: String) {
         if (theme == "Blue" && font == "Roboto") {
             setTheme(R.style.ThemeBlueRoboto)
+            binding.textViewToTest.text = R.style.ThemeBlueRoboto.toString()
         } else if (theme == "Blue" && font == "Roboto Mono") {
             setTheme(R.style.ThemeBlueRobotoMono)
+            binding.textViewToTest.text = R.style.ThemeBlueRobotoMono.toString()
         } else if (theme == "Black" && font == "Roboto") {
             setTheme(R.style.ThemeBlackRoboto)
+            binding.textViewToTest.text = R.style.ThemeBlackRoboto.toString()
         } else if (theme == "Black" && font == "Roboto Mono") {
             setTheme(R.style.ThemeBlackRobotoMono)
+            binding.textViewToTest.text = R.style.ThemeBlackRobotoMono.toString()
         }
-
-        return theme + font
     }
 
 

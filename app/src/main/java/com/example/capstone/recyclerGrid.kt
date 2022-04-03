@@ -30,6 +30,8 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
 
+            Log.d("test2", widgetSettings)
+
             view?.evaluateJavascript("javascript:getData('$widgetSettings');", null)
         }
     }
@@ -94,12 +96,15 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
 
         val keyValueOfPreference = preferences.filterKeys { it.contains(key) }
 
-        var widgetData = ""
+        var widgetData = "{"
         for (keyValue in keyValueOfPreference) {
             val keyValueArray = keyValue.toString().split("=")
             val newKey = keyValueArray[0].split("_")[0]
-            widgetData += newKey + "=" + keyValueArray[1] + ", "
+            widgetData += "\"" + newKey + "\":" + " \"" + keyValueArray[1] + "\", "
         }
+
+        widgetData = widgetData.dropLast(2)
+        widgetData += "}"
 
         return widgetData
     }
