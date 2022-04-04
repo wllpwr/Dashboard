@@ -43,7 +43,7 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
         notifyDataSetChanged()
     }
 
-    class ViewHolder(val binding: WidgetBinding) : RecyclerView.ViewHolder(binding.root) {}
+    class ViewHolder(val binding: WidgetBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = WidgetBinding.inflate(LayoutInflater.from(parent.context), parent, false)
