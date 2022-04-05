@@ -3,6 +3,7 @@
     <string-array name="theme">
         <item>Black</item>
         <item>Blue</item>
+        <item>Nord</item>
     </string-array>
     <string-array name="font">
         <item>Roboto</item>

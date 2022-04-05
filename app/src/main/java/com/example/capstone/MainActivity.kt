@@ -66,6 +66,9 @@ class MainActivity : AppCompatActivity() {
         } else if (theme == "Black" && font == "Roboto Mono") {
             setTheme(R.style.ThemeBlackRobotoMono)
             binding.textViewToTest.text = R.style.ThemeBlackRobotoMono.toString()
+        } else if (theme == "Nord" && font == "Roboto Mono") {
+            setTheme(R.style.ThemeNordRoboto)
+            binding.textViewToTest.text = R.style.ThemeNordRoboto.toString()
         }
     }
 

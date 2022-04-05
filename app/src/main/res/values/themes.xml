@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="ThemeBlackRoboto" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/black</item>
@@ -34,5 +34,16 @@
         <item name="colorOnSecondary">@color/white</item>
         <item name="android:statusBarColor">@color/blue</item>
         <item name="fontFamily">@font/roboto_mono_regular</item>
+    </style>
+
+    <style name="ThemeNordRoboto">
+        <item name="colorPrimary">@color/polar4</item>
+        <item name="colorOnPrimary">@color/snow2</item>
+        <item name="colorSecondary">@color/frost4</item>
+        <item name="colorOnSecondary">@color/snow2</item>
+        <item name="android:statusBarColor">@color/polar4</item>
+        <item name="fontFamily">@font/roboto_mono_regular</item>
+
+
     </style>
 </resources>

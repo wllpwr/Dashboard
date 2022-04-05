@@ -59,17 +59,17 @@ class WidgetSettingsFragment : PreferenceFragmentCompat() {
         }
 
 
-
         // update or add widget button
         val confirmButton = Preference(prefContext)
         confirmButton.key = "ConfirmButton"
-        confirmButton.title = "Confirm"
-        confirmButton.summary = "Update Settings of Widget"
+        confirmButton.title = getString(R.string.confirm)
+        confirmButton.summary = getString(R.string.confirmWidgetSubtext)
 
-        confirmButton.onPreferenceClickListener = Preference.OnPreferenceClickListener { //code for what you want it to do
-            findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
-            true
-        }
+        confirmButton.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener { //code for what you want it to do
+                findNavController().navigate(R.id.action_widgetSettingsFragment_to_dashboardFragment2)
+                true
+            }
 
 
         screen.addPreference(confirmButton)

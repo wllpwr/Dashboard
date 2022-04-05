@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="light_gray">#D3D3D3</color>
+    <color name="light_gray">#5a5d72</color>
 
-    <color name="blue">#2962ff</color>
-    <color name="dark_blue">#0039cb</color>
-    <color name="yellow">#ffeb3b</color>
-    <color name="dark_yellow">#c8b900</color>
+    <color name="blue">#2c4ce3</color>
+    <color name="dark_blue">#3d52c7</color>
+    <color name="yellow">#696000</color>
+    <color name="dark_yellow">#695f00</color>
+
+    <!-- nord pallete -->
+
+    <color name="polar1">#2E3440</color>
+    <color name="polar2">#3B4252</color>
+    <color name="polar3">#434C5E</color>
+    <color name="polar4">#4C566A</color>
+
+    <color name="snow1">#D8DEE9</color>
+    <color name="snow2">#E5E9F0</color>
+    <color name="snow3">#ECEFF4</color>
+
+    <color name="frost1">#8FBCBB</color>
+    <color name="frost2">#88C0D0</color>
+    <color name="frost3">#81A1C1</color>
+    <color name="frost4">#5E81AC</color>
+
+    <color name="aurora1">#BF616A</color>
+    <color name="aurora2">#D08770</color>
+    <color name="aurora3">#EBCB8B</color>
+    <color name="aurora4">#A3BE8C</color>
+    <color name="aurora5">#B48EAD</color>
+
+
 </resources>

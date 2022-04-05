@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -72,12 +71,20 @@ class DashboardFragment : Fragment() {
                     swipeHelper.attachToRecyclerView(null)
                     dragHelper.attachToRecyclerView(binding.recyclerView)
                     widgetViewModel.isMove = true
-                    Toast.makeText(requireContext(), "Widget Movement Enabled", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.movement_enabled),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     swipeHelper.attachToRecyclerView(binding.recyclerView)
                     dragHelper.attachToRecyclerView(null)
                     widgetViewModel.isMove = false
-                    Toast.makeText(requireContext(), "Widget Movement Disabled", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.movement_disabled),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 true
             }
@@ -116,12 +123,20 @@ class DashboardFragment : Fragment() {
                         swipeHelper.attachToRecyclerView(null)
                         dragHelper.attachToRecyclerView(binding.recyclerView)
                         widgetViewModel.isMove = true
-                        Toast.makeText(requireContext(), "Widget Movement Enabled", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.movement_enabled),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         swipeHelper.attachToRecyclerView(binding.recyclerView)
                         dragHelper.attachToRecyclerView(null)
                         widgetViewModel.isMove = false
-                        Toast.makeText(requireContext(), "Widget Movement Disabled", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.movement_disabled),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     true
                 }

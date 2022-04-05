@@ -1,14 +1,22 @@
 <resources>
-    <string name="app_name">Name of App?</string>
-    <string name="add_button">Add Widget</string>
-    <string name="delete_button">Delete Widget</string>
+    <string name="app_name">DashScript</string>
+    <string name="add_button">Add widget</string>
+    <string name="delete_button">Delete widget</string>
     <string name="settings_button">Settings</string>
-    <string name="move_button">Move Widgets</string>
-    <string name="theme_settings">Change Theme</string>
-    <string name="font_settings">Change Font</string>
-    <string name="font_size_settings">Change Font Size</string>
+    <string name="move_button">Move widgets</string>
+    <string name="theme_settings">Change theme</string>
+    <string name="font_settings">Change font</string>
+    <string name="font_size_settings">Change font size</string>
     <string name="apply_settings">Apply</string>
-    <string name="weather_widget_location_setting">Change Location</string>
+    <string name="weather_widget_location_setting">Change location</string>
     <string name="weather_widget_cf_setting">C° or F°</string>
     <string name="confirmButtonKey">ConfirmButton</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirmWidgetSubtext">Update widget settings</string>
+    <string name="movement_enabled">Widget movement enabled</string>
+    <string name="movement_disabled">Widget movement disabled</string>
+    <string name="theme_subtext">Change app theme</string>
+    <string name="font_subtext">Change app font</string>
+    <string name="apply_app_settings">Apply app settings</string>
+
 </resources>
