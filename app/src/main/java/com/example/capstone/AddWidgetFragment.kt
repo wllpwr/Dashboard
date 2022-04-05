@@ -26,7 +26,7 @@ class AddWidgetFragment : Fragment() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val widgetList = arrayOf("Weather Widget", "Time Widget", "News Widget", "Finance Widget", "Chart Widget", "MQTT Widget")
+        val widgetList = arrayOf("Weather Widget", "Time Widget", "Reddit Widget", "Stocks Widget", "Chart Widget", "MQTT Widget")
         val widgetIconList = arrayOf(R.drawable.ic_baseline_wb_sunny_24, R.drawable.ic_baseline_access_time_24, R.drawable.ic_baseline_article_24, R.drawable.ic_baseline_attach_money_24, R.drawable.ic_baseline_insert_chart_outlined_24, R.drawable.ic_baseline_wifi_24)
 
         addWidgetRecycler = AddWidgetRecycler(widgetList, widgetIconList)

@@ -29,23 +29,46 @@
 </style>
 
 <body>
-<div id="ticker"></div>
+<div id="ticker">N/A</div>
 <div id="currentPrice"></div>
 </body>
 <script>
 
-  key = "2ug32v28NbG74uAq7YIabjcetNlvEz2h"
-  ticker = "GOOGL"
+  function sendMessage(fileName, jsonString) {
+      Android.createAndWriteToJson(fileName, jsonString);
+  }
 
-  document.getElementById("ticker").textContent = ticker;
-  fetch("https://yh-finance.p.rapidapi.com/stock/v3/get-statistics?symbol=" +
-    ticker, {
-    "method": "GET",
-    "headers": {
+  var settings = ""
+
+  function getData(data) {
+    console.log(data)
+    settings = data
+    displayData()
+  }
+
+  window.onload = function() {
+    var jsonString = '[{"type": "editText", "name": "ticker", "title": "Ticker", "summary": "Enter a name of a stock"}]'
+
+    var fileName = "stocksSettings.json"
+
+    sendMessage(fileName, jsonString)
+  }
+
+  function displayData() {
+    var settingsObj = JSON.parse(settings)
+
+    key = "2ug32v28NbG74uAq7YIabjcetNlvEz2h"
+    ticker = settingsObj.ticker
+
+    document.getElementById("ticker").textContent = ticker;
+    fetch("https://yh-finance.p.rapidapi.com/stock/v3/get-statistics?symbol=" +
+        ticker, {
+        "method": "GET",
+        "headers": {
       "x-rapidapi-host": "yh-finance.p.rapidapi.com",
       "x-rapidapi-key": "4d8c95894emshac01973c0a0dfc0p1ae047jsne79474a8a156"
     }
-  })
+    })
     .then(response => response.json())
     .then(data => {
       console.log(data.financialData.currentPrice.fmt)
@@ -56,6 +79,7 @@
     .catch(err => {
       console.error(err);
     });
+  }
 
 </script>
 

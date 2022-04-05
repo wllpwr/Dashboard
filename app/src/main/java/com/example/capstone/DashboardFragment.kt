@@ -190,14 +190,14 @@ class DashboardFragment : Fragment() {
                 widgetViewModel.settingsList.add("weatherSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
-            "News Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.newsWidget)
-                widgetViewModel.settingsList.add("weatherSettings.json")
+            "Reddit Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.redditWidget)
+                widgetViewModel.settingsList.add("redditSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
-            "Finance Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.financeWidget)
-                widgetViewModel.settingsList.add("weatherSettings.json")
+            "Stocks Widget" -> {
+                widgetViewModel.widgetList.add(widgetViewModel.stocksWidget)
+                widgetViewModel.settingsList.add("stocksSettings.json")
                 widgetViewModel.keyList.add(generateKey())
             }
             "MQTT Widget" -> {

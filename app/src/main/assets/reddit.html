@@ -22,36 +22,59 @@
 </style>
 
 <body>
-  <div id="subreddit"></div><br>
+  <div id="subreddit">N/A</div><br>
   <div id="topPost"></div>
 </body>
 <script>
+
+  function sendMessage(fileName, jsonString) {
+      Android.createAndWriteToJson(fileName, jsonString);
+  }
+
+  var settings = ""
+
+  function getData(data) {
+    console.log(data)
+    settings = data
+    displayData()
+  }
+
+  window.onload = function() {
+    var jsonString = '[{"type": "editText", "name": "subReddit", "title": "Sub Reddit", "summary": "Enter a name of a sub reddit"}]'
+
+    var fileName = "redditSettings.json"
+
+    sendMessage(fileName, jsonString)
+  }
 
   function truncate(str, maxlength) {
     return (str.length > maxlength) ?
       str.slice(0, maxlength - 1) + '…' : str;
   }
 
+  function displayData() {
+    var settingsObj = JSON.parse(settings)
 
-  var subreddit = "news";
-  var listing = "top";
-  var timeframe = "today";
+    var subreddit = settingsObj.subReddit;
+    var listing = "top";
+    var timeframe = "today";
 
-  document.getElementById("subreddit").textContent = "r/" + subreddit;
-  fetch("https://www.reddit.com/r/" + 
-  subreddit + "/" + 
-  listing + ".json?limit=1&t=" + timeframe)
-    .then(response => response.json())
-    .then(data => {
+    document.getElementById("subreddit").textContent = "r/" + subreddit;
+    fetch("https://www.reddit.com/r/" +
+    subreddit + "/" +
+    listing + ".json?limit=1&t=" + timeframe)
+      .then(response => response.json())
+      .then(data => {
 
-      postData = data.data.children[0].data;
-      document.getElementById("topPost").textContent = truncate(postData.title, 100);
+        postData = data.data.children[0].data;
+        document.getElementById("topPost").textContent = truncate(postData.title, 100);
 
-      
-    })
-    .catch(err => {
-      console.error(err);
-    });
+
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
 
 </script>
 
