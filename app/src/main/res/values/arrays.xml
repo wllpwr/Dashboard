@@ -4,6 +4,8 @@
         <item>Black</item>
         <item>Blue</item>
         <item>Nord</item>
+        <item>Solarized Light</item>
+        <item>Arc</item>
     </string-array>
     <string-array name="font">
         <item>Roboto</item>

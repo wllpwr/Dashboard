@@ -10,7 +10,7 @@
     <color name="yellow">#696000</color>
     <color name="dark_yellow">#695f00</color>
 
-    <!-- nord pallete -->
+    <!-- nord palette -->
 
     <color name="polar1">#2E3440</color>
     <color name="polar2">#3B4252</color>
@@ -32,5 +32,23 @@
     <color name="aurora4">#A3BE8C</color>
     <color name="aurora5">#B48EAD</color>
 
+    <!-- solarized palette -->
+    <color name="base3">#fdf6e3</color>
+    <color name="base2">#eee8d5</color>
+    <color name="base1">#93a1a1</color>
+    <color name="base0">#839496</color>
+    <color name="base00">#657b83</color>
+    <color name="base01">#586e75</color>
+    <color name="base02">#073642</color>
+    <color name="base03">#002b36</color>
+
+    <!-- arc dark color palette -->
+
+    <color name="arc1">#404552</color>
+    <color name="arc2">#383c4a</color>
+    <color name="arc3">#4b5162</color>
+    <color name="arc4">#5294e2</color>
+    <color name="arc5">#7c818c</color>
+    <color name="arcWhite">#f5f6f7</color>
 
 </resources>

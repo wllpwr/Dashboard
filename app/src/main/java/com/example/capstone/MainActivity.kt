@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             changeTheme(theme as String, font as String)
         }
 
+
         setContentView(view)
 
         if (savedInstanceState == null) {
@@ -66,10 +67,26 @@ class MainActivity : AppCompatActivity() {
         } else if (theme == "Black" && font == "Roboto Mono") {
             setTheme(R.style.ThemeBlackRobotoMono)
             binding.textViewToTest.text = R.style.ThemeBlackRobotoMono.toString()
-        } else if (theme == "Nord" && font == "Roboto Mono") {
+        } else if (theme == "Nord" && font == "Roboto") {
             setTheme(R.style.ThemeNordRoboto)
             binding.textViewToTest.text = R.style.ThemeNordRoboto.toString()
+        } else if (theme == "Nord" && font == "RobotoMono") {
+            setTheme(R.style.ThemeNordRobotoMono)
+            binding.textViewToTest.text = R.style.ThemeNordRobotoMono.toString()
+        } else if (theme == "Solarized Light" && font == "Roboto") {
+            setTheme(R.style.ThemeSolarizedLightRoboto)
+            binding.textViewToTest.text = R.style.ThemeSolarizedLightRoboto.toString()
+        } else if (theme == "Solarized Light" && font == "Roboto Mono") {
+            setTheme(R.style.ThemeSolarizedRobotoMono)
+            binding.textViewToTest.text = R.style.ThemeSolarizedRobotoMono.toString()
+        } else if (theme == "Arc" && font == "Roboto") {
+            setTheme(R.style.ThemeArcRoboto)
+            binding.textViewToTest.text = R.style.ThemeArcRoboto.toString()
+        } else if (theme == "Arc" && font == "Roboto Mono") {
+            setTheme(R.style.ThemeArcRobotoMono)
+            binding.textViewToTest.text = R.style.ThemeArcRobotoMono.toString()
         }
+
     }
 
 
