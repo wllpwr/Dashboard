@@ -15,7 +15,7 @@ import com.example.capstone.databinding.WidgetBinding
 
 
 @SuppressLint("SetJavaScriptEnabled")
-class RecyclerGrid(private var dataList: ArrayList<String>, private var settingsList: ArrayList<String>, private var keyList: ArrayList<String>, private var context: Context): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
+class RecyclerGrid(private var widgetList: ArrayList<Widget>, private var context: Context): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
 
     private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader, private val widgetSettings: String) : WebViewClientCompat() {
@@ -37,9 +37,7 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
     }
 
     fun deleteItem(index: Int) {
-        dataList.removeAt(index)
-        keyList.removeAt(index)
-        settingsList.removeAt(index)
+        widgetList.removeAt(index)
         notifyDataSetChanged()
     }
 
@@ -78,17 +76,17 @@ class RecyclerGrid(private var dataList: ArrayList<String>, private var settings
                 .addPathHandler("/assets/", AssetsPathHandler(context))
                 .build()
 
-            with(keyList[position]) {
+            with(widgetList[position].key) {
                 binding.webView.webViewClient = LocalContentWebViewClient(assetLoader, getWidgetSettings(this))
             }
 
-            with(dataList[position]) {
+            with(widgetList[position].widgetUrl) {
                 binding.webView.loadUrl(this)
             }
         }
     }
 
-    override fun getItemCount() = dataList.size
+    override fun getItemCount() = widgetList.size
 
     private fun getWidgetSettings(key: String): String {
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)

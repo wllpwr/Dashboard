@@ -42,16 +42,10 @@ class DashboardFragment : Fragment() {
             val sharedPrefSize = sharedPref.all.size / 3
             for (index in range(0, sharedPrefSize)) {
                 val widget = sharedPref.getString(index.toString() + "widget", null)
-                if (widget != null) {
-                    widgetViewModel.widgetList.add(widget)
-                }
                 val settings = sharedPref.getString(index.toString() + "settings", null)
-                if (settings != null) {
-                    widgetViewModel.settingsList.add(settings)
-                }
                 val key = sharedPref.getString(index.toString() + "key", null)
-                if (key != null) {
-                    widgetViewModel.keyList.add(key)
+                if (widget != null && settings != null && key != null) {
+                    widgetViewModel.widgetList.add(Widget(widget, settings, key))
                 }
             }
             Log.d("test", "onCreateViewModelAfter" + widgetViewModel.widgetList.toString())
@@ -105,7 +99,7 @@ class DashboardFragment : Fragment() {
 
         gridLayoutManager = GridLayoutManager(context,2)
         binding.recyclerView.layoutManager = gridLayoutManager
-        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, widgetViewModel.settingsList ,widgetViewModel.keyList, requireContext())
+        recyclerGridAdapter = RecyclerGrid(widgetViewModel.widgetList, requireContext())
         binding.recyclerView.adapter = recyclerGridAdapter
 
         binding.fab.setOnClickListener {
@@ -146,14 +140,12 @@ class DashboardFragment : Fragment() {
 
         val swipedDelete = object : SwipeToDelete(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                Log.d("test", "SwipeBefore" + widgetViewModel.widgetList.toString())
                 if (direction == ItemTouchHelper.LEFT) {
                     recyclerGridAdapter.deleteItem(viewHolder.absoluteAdapterPosition)
-                    Log.d("test", "SwipeAfter" + widgetViewModel.widgetList.toString())
                 } else if (direction == ItemTouchHelper.RIGHT) {
                     val widgetSwiped = widgetViewModel.widgetList[viewHolder.absoluteAdapterPosition]
 
-                    val action = DashboardFragmentDirections.actionDashboardFragment2ToWidgetSettingsFragment(viewHolder.absoluteAdapterPosition, widgetSwiped)
+                    val action = DashboardFragmentDirections.actionDashboardFragment2ToWidgetSettingsFragment(viewHolder.absoluteAdapterPosition, widgetSwiped.widgetUrl)
                     view.findNavController().navigate(action)
 
                 }
@@ -171,8 +163,6 @@ class DashboardFragment : Fragment() {
                 val to = target.absoluteAdapterPosition
 
                 Collections.swap(widgetViewModel.widgetList, from, to)
-                Collections.swap(widgetViewModel.settingsList, from, to)
-                Collections.swap(widgetViewModel.keyList, from, to)
 
                 adapter.notifyItemMoved(from, to)
 
@@ -191,34 +181,22 @@ class DashboardFragment : Fragment() {
     private fun addWidget(widget: String) {
         when (widget) {
             "Weather Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.weatherWidget)
-                widgetViewModel.settingsList.add("weatherSettings.json")
-                widgetViewModel.keyList.add(generateKey())
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.weatherWidget, "weatherSettings.json", generateKey()))
             }
             "Time Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.timeWidget)
-                widgetViewModel.settingsList.add("timeSettings.json")
-                widgetViewModel.keyList.add(generateKey())
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.timeWidget, "timeSettings.json", generateKey()))
             }
             "Chart Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.chartWidget)
-                widgetViewModel.settingsList.add("weatherSettings.json")
-                widgetViewModel.keyList.add(generateKey())
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.chartWidget, "timeSettings.json", generateKey()))
             }
             "Reddit Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.redditWidget)
-                widgetViewModel.settingsList.add("redditSettings.json")
-                widgetViewModel.keyList.add(generateKey())
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.redditWidget, "redditSettings.json", generateKey()))
             }
             "Stocks Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.stocksWidget)
-                widgetViewModel.settingsList.add("stocksSettings.json")
-                widgetViewModel.keyList.add(generateKey())
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.stocksWidget, "stocksSettings.json", generateKey()))
             }
             "MQTT Widget" -> {
-                widgetViewModel.widgetList.add(widgetViewModel.mqttWidget)
-                widgetViewModel.settingsList.add("weatherSettings.json")
-                widgetViewModel.keyList.add(generateKey())
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.mqttWidget, "timeSettings.json", generateKey()))
 
             }
         }

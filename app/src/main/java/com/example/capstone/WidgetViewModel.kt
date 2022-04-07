@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class WidgetViewModel : ViewModel() {
 
-    var widgetList = ArrayList<String>()
-    var settingsList = ArrayList<String>()
-    var keyList = ArrayList<String>()
+    var widgetList = ArrayList<Widget>()
 
     var isStart = true
     var isMove = false

@@ -15,8 +15,8 @@ class WidgetSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val index = args.index
 
-        val settingsFileName = widgetViewModel.settingsList[index]
-        val key = widgetViewModel.keyList[index]
+        val settingsFileName = widgetViewModel.widgetList[index].settingsFile
+        val key = widgetViewModel.widgetList[index].key
 
         val prefContext = preferenceManager.context
         val screen = preferenceManager.createPreferenceScreen(prefContext)
