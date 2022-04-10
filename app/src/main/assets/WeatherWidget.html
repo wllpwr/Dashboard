@@ -6,12 +6,15 @@
 <style>
     body {
       background-color:black
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .theme {
+        color:white;
     }
 
     #temp {
-        color:white;
         font-size: xx-large;
-        font-family: Arial, Helvetica, sans-serif;
         position: absolute;
         top:  50%;
         left: 50%;
@@ -21,9 +24,7 @@
     }
 
     #location {
-      color:white;
       font-size: small;
-      font-family: Arial, Helvetica, sans-serif;
       position: absolute;
       top:  60%;
       left: 50%;
@@ -33,8 +34,10 @@
     }
 </style>
 <body>
-<div id="temp">N/A</div>
-<div id="location"></div>
+    <div class="theme">
+      <div id="temp">N/A</div>
+      <div id="location"></div>
+    </div>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -71,6 +74,39 @@
     if (settingsObj.celsius == "true") {
       unit = "metric"
     }
+
+    switch(settingsObj.theme) {
+      case "Blue":
+        document.body.style.backgroundColor = "#2c4ce3"
+        document.getElementsByClassName("theme")[0].style.color = "white"
+        break
+      case "Black":
+        document.body.style.backgroundColor = "black"
+        document.getElementsByClassName("theme")[0].style.color = "white"
+        break
+      case "Nord":
+        document.body.style.backgroundColor = "#4C566A"
+        document.getElementsByClassName("theme")[0].style.color = "#E5E9F0"
+        break
+      case "Solarized Light":
+        document.body.style.backgroundColor = "#eee8d5"
+        document.getElementsByClassName("theme")[0].style.color = "#002b36"
+        break
+      case "Arc":
+        document.body.style.backgroundColor = "#404552"
+        document.getElementsByClassName("theme")[0].style.color = "#f5f6f7"
+        break
+    }
+
+    switch(settingsObj.font) {
+      case "Roboto":
+        document.body.style.fontFamily = "Arial, sans-serif"
+        break
+      case "Roboto Mono":
+        document.body.style.fontFamily = "Courier New, monospace"
+        break
+    }
+
 
     document.getElementById("location").innerHTML = zipCode
 

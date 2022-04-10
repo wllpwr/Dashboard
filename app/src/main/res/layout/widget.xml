@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
-    android:background="@drawable/widget_border"
     android:orientation="vertical"
     tools:layout_editor_absoluteX="5dp"
     tools:layout_editor_absoluteY="5dp">
@@ -14,3 +13,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--android:background="@drawable/widget_border"-->
