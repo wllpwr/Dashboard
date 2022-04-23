@@ -48,14 +48,13 @@
           timeNow()
         }
 
+        function createSettingsFile(fileName) {
+          var jsonString = '[{"type": "list", "name": "timeZone", "title": "Time Zone", "summary": "Pick a Time Zone", "list": ["Local", "UTC", "UTC+1", "UTC+2", "UTC+3", "UTC+4", "UTC+5", "UTC+6", "UTC+7", "UTC+8", "UTC+9", "UTC+10", "UTC+11", "UTC+12", "UTC-1", "UTC-2", "UTC-3", "UTC-4", "UTC-5", "UTC-6", "UTC-7", "UTC-8", "UTC-9", "UTC-10", "UTC-11", "UTC-12"]}, {"type": "switch", "name": "military", "title": "Military Time", "summary": "display as Military Time"}]'
+          sendMessage(fileName, jsonString)
+        }
+
         window.onload = function() {
           setInterval(timeNow, 400);
-
-          var jsonString = '[{"type": "list", "name": "timeZone", "title": "Time Zone", "summary": "Pick a Time Zone", "list": ["Local", "UTC", "UTC+1", "UTC+2", "UTC+3", "UTC+4", "UTC+5", "UTC+6", "UTC+7", "UTC+8", "UTC+9", "UTC+10", "UTC+11", "UTC+12", "UTC-1", "UTC-2", "UTC-3", "UTC-4", "UTC-5", "UTC-6", "UTC-7", "UTC-8", "UTC-9", "UTC-10", "UTC-11", "UTC-12"]}, {"type": "switch", "name": "military", "title": "Military Time", "summary": "display as Military Time"}]'
-
-          var fileName = "timeSettings.json"
-
-          sendMessage(fileName, jsonString)
         }
 
         function addZero(i) {

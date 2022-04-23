@@ -49,12 +49,13 @@
     displayData()
   }
 
-  window.onload = function() {
+  function createSettingsFile(fileName) {
     var jsonString = '[{"type": "editText", "name": "ticker", "title": "Ticker", "summary": "Enter a name of a stock"}]'
-
-    var fileName = "stocksSettings.json"
-
     sendMessage(fileName, jsonString)
+  }
+
+  window.onload = function() {
+    setInterval(displayData, 600000);
   }
 
   function displayData() {

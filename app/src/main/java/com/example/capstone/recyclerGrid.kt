@@ -12,13 +12,14 @@ import androidx.webkit.WebViewAssetLoader
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler
 import androidx.webkit.WebViewClientCompat
 import com.example.capstone.databinding.WidgetBinding
+import java.io.File
 
 
 @SuppressLint("SetJavaScriptEnabled")
 class RecyclerGrid(private var widgetList: ArrayList<Widget>, private var context: Context): RecyclerView.Adapter<RecyclerGrid.ViewHolder>() {
 
 
-    private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader, private val widgetSettings: String) : WebViewClientCompat() {
+    private class LocalContentWebViewClient(private val assetLoader: WebViewAssetLoader, private val widgetSettings: String, private val settingsFileName: String) : WebViewClientCompat() {
         //@RequiresApi(21)
         override fun shouldInterceptRequest(
             view: WebView,
@@ -30,8 +31,8 @@ class RecyclerGrid(private var widgetList: ArrayList<Widget>, private var contex
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
 
-            Log.d("test2", widgetSettings)
 
+            view?.evaluateJavascript("javascript:createSettingsFile('$settingsFileName');", null)
             view?.evaluateJavascript("javascript:getData('$widgetSettings');", null)
         }
     }
@@ -60,7 +61,6 @@ class RecyclerGrid(private var widgetList: ArrayList<Widget>, private var contex
         with(holder) {
             // Set item views based on your views and data model
             binding.webView.settings.javaScriptEnabled = true
-            binding.webView.settings.allowUniversalAccessFromFileURLs = true
             binding.webView.addJavascriptInterface(WebViewInterface(binding.webView.context), "Android")
 
             binding.webView.webChromeClient = object : WebChromeClient() {
@@ -73,14 +73,17 @@ class RecyclerGrid(private var widgetList: ArrayList<Widget>, private var contex
                 }
             }
 
-
+            val customWidgetsDir = File(context.filesDir, "custom_widgets")
 
             val assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))
+                .addPathHandler("/custom_widgets/",
+                    WebViewAssetLoader.InternalStoragePathHandler(context, customWidgetsDir)
+                )
                 .build()
 
             with(widgetList[position].key) {
-                binding.webView.webViewClient = LocalContentWebViewClient(assetLoader, getWidgetSettings(this))
+                binding.webView.webViewClient = LocalContentWebViewClient(assetLoader, getWidgetSettings(this), widgetList[position].settingsFile)
             }
 
             with(widgetList[position].widgetUrl) {

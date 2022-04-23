@@ -42,12 +42,13 @@
     displayData()
   }
 
-  window.onload = function() {
+  function createSettingsFile(fileName) {
     var jsonString = '[{"type": "editText", "name": "subReddit", "title": "Subreddit", "summary": "Enter subreddit name"}]'
-
-    var fileName = "redditSettings.json"
-
     sendMessage(fileName, jsonString)
+  }
+
+  window.onload = function() {
+    setInterval(displayData, 600000);
   }
 
   function truncate(str, maxlength) {

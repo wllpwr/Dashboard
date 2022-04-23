@@ -54,13 +54,13 @@
     displayData()
   }
 
-  function displayData() {
+  function createSettingsFile(fileName) {
     var jsonString = '[{"type": "editText", "name": "zipCode", "title": "Zip Code", "summary": "Enter the Zip Code of the location you want the weather from"}, {"type": "switch", "name": "celsius", "title": "Celsius", "summary": "Change temperature to be displayed as Celsius"}]'
-
-    var fileName = "weatherSettings.json"
-
     sendMessage(fileName, jsonString)
+  }
 
+
+  function displayData() {
     var settingsObj = JSON.parse(settings)
 
     var splitSettings = settings.split(', ')
