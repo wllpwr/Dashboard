@@ -63,13 +63,15 @@
 
     var settingsObj = JSON.parse(settings)
 
-    console.log(settingsObj.zipCode)
-
     var splitSettings = settings.split(', ')
 
     var apiKey = "d0e0ee9c992e0c35187450ad00b56957";
     var unit = "imperial";
-    var zipCode = settingsObj.zipCode
+    try {
+        var zipCode = settingsObj.zipCode;
+    } catch (e) {
+        var zipCode = "05401";
+    }
 
     if (settingsObj.celsius == "true") {
       unit = "metric"

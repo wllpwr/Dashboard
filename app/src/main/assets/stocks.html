@@ -3,13 +3,16 @@
 
 <style>
   body {
-    background-color: black
+     background-color:black
+     font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .theme {
+     color:white;
   }
 
   #ticker {
-    color: white;
     font-size: 30px;
-    font-family: Arial, Helvetica, sans-serif;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -17,9 +20,7 @@
   }
 
   #currentPrice {
-    color: white;
     font-size: 30px;
-    font-family: Arial, Helvetica, sans-serif;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -29,8 +30,10 @@
 </style>
 
 <body>
-<div id="ticker">N/A</div>
-<div id="currentPrice"></div>
+    <div class="theme">
+        <div id="ticker">N/A</div>
+        <div id="currentPrice"></div>
+    </div>
 </body>
 <script>
 
@@ -56,6 +59,38 @@
 
   function displayData() {
     var settingsObj = JSON.parse(settings)
+
+    switch(settingsObj.theme) {
+      case "Blue":
+        document.body.style.backgroundColor = "#2c4ce3"
+        document.getElementsByClassName("theme")[0].style.color = "white"
+        break
+      case "Black":
+        document.body.style.backgroundColor = "black"
+        document.getElementsByClassName("theme")[0].style.color = "white"
+        break
+      case "Nord":
+        document.body.style.backgroundColor = "#4C566A"
+        document.getElementsByClassName("theme")[0].style.color = "#E5E9F0"
+        break
+      case "Solarized Light":
+        document.body.style.backgroundColor = "#eee8d5"
+        document.getElementsByClassName("theme")[0].style.color = "#002b36"
+        break
+      case "Arc":
+        document.body.style.backgroundColor = "#404552"
+        document.getElementsByClassName("theme")[0].style.color = "#f5f6f7"
+        break
+    }
+
+    switch(settingsObj.font) {
+      case "Roboto":
+        document.body.style.fontFamily = "Arial, sans-serif"
+        break
+      case "Roboto Mono":
+        document.body.style.fontFamily = "Courier New, monospace"
+        break
+    }
 
     key = "2ug32v28NbG74uAq7YIabjcetNlvEz2h"
     ticker = settingsObj.ticker

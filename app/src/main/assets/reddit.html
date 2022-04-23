@@ -3,27 +3,30 @@
 
 <style>
   body {
-    background-color: black
+     background-color:black
+     font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .theme {
+     color:white;
   }
 
   #subreddit {
-    color: white;
     font-size: 25px;
-    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
   }
 
   #topPost {
-    color: white;
     font-size: 15px;
-    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
   }
 </style>
 
 <body>
-  <div id="subreddit">N/A</div><br>
-  <div id="topPost"></div>
+  <div class="theme">
+    <div id="subreddit">N/A</div><br>
+    <div id="topPost"></div>
+  </div>
 </body>
 <script>
 
@@ -54,6 +57,38 @@
 
   function displayData() {
     var settingsObj = JSON.parse(settings)
+
+    switch(settingsObj.theme) {
+      case "Blue":
+        document.body.style.backgroundColor = "#2c4ce3"
+        document.getElementsByClassName("theme")[0].style.color = "white"
+        break
+      case "Black":
+        document.body.style.backgroundColor = "black"
+        document.getElementsByClassName("theme")[0].style.color = "white"
+        break
+      case "Nord":
+        document.body.style.backgroundColor = "#4C566A"
+        document.getElementsByClassName("theme")[0].style.color = "#E5E9F0"
+        break
+      case "Solarized Light":
+        document.body.style.backgroundColor = "#eee8d5"
+        document.getElementsByClassName("theme")[0].style.color = "#002b36"
+        break
+      case "Arc":
+        document.body.style.backgroundColor = "#404552"
+        document.getElementsByClassName("theme")[0].style.color = "#f5f6f7"
+        break
+    }
+
+    switch(settingsObj.font) {
+      case "Roboto":
+        document.body.style.fontFamily = "Arial, sans-serif"
+        break
+      case "Roboto Mono":
+        document.body.style.fontFamily = "Courier New, monospace"
+        break
+    }
 
     var subreddit = settingsObj.subReddit;
     var listing = "top";

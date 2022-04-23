@@ -18,5 +18,7 @@
     <string name="theme_subtext">Change app theme</string>
     <string name="font_subtext">Change app font</string>
     <string name="apply_app_settings">Apply app settings</string>
+    <string name="custom_widget_url">Custom Widget Url</string>
+    <string name="confirm_url">Confirm Url</string>
 
 </resources>

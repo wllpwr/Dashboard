@@ -60,6 +60,7 @@ class RecyclerGrid(private var widgetList: ArrayList<Widget>, private var contex
         with(holder) {
             // Set item views based on your views and data model
             binding.webView.settings.javaScriptEnabled = true
+            binding.webView.settings.allowUniversalAccessFromFileURLs = true
             binding.webView.addJavascriptInterface(WebViewInterface(binding.webView.context), "Android")
 
             binding.webView.webChromeClient = object : WebChromeClient() {
@@ -71,6 +72,8 @@ class RecyclerGrid(private var widgetList: ArrayList<Widget>, private var contex
                     return true
                 }
             }
+
+
 
             val assetLoader = WebViewAssetLoader.Builder()
                 .addPathHandler("/assets/", AssetsPathHandler(context))

@@ -1,13 +1,16 @@
 <html>
 <style>
       body {
-        background-color:black
+         background-color:black
+         font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .theme {
+         color:white;
       }
 
       #timespot {
-        color:white;
         font-size: xx-large;
-        font-family: Arial, Helvetica, sans-serif;
         position: absolute;
         top:  50%;
         left: 50%;
@@ -17,9 +20,7 @@
       }
 
       #timeZone {
-        color:white;
         font-size: small;
-        font-family: Arial, Helvetica, sans-serif;
         position: absolute;
         top:  60%;
         left: 50%;
@@ -30,8 +31,10 @@
 
   </style>
 <body>
-<div id="timespot">N/A</div>
-<div id="timeZone">N/A</div>
+    <div class="theme">
+        <div id="timespot">N/A</div>
+        <div id="timeZone">N/A</div>
+    </div>
 <script>
         function sendMessage(fileName, jsonString) {
           Android.createAndWriteToJson(fileName, jsonString);
@@ -71,6 +74,38 @@
 
         function timeNow() {
             var settingsObj = JSON.parse(settings)
+
+            switch(settingsObj.theme) {
+              case "Blue":
+                document.body.style.backgroundColor = "#2c4ce3"
+                document.getElementsByClassName("theme")[0].style.color = "white"
+                break
+              case "Black":
+                document.body.style.backgroundColor = "black"
+                document.getElementsByClassName("theme")[0].style.color = "white"
+                break
+              case "Nord":
+                document.body.style.backgroundColor = "#4C566A"
+                document.getElementsByClassName("theme")[0].style.color = "#E5E9F0"
+                break
+              case "Solarized Light":
+                document.body.style.backgroundColor = "#eee8d5"
+                document.getElementsByClassName("theme")[0].style.color = "#002b36"
+                break
+              case "Arc":
+                document.body.style.backgroundColor = "#404552"
+                document.getElementsByClassName("theme")[0].style.color = "#f5f6f7"
+                break
+            }
+
+            switch(settingsObj.font) {
+              case "Roboto":
+                document.body.style.fontFamily = "Arial, sans-serif"
+                break
+              case "Roboto Mono":
+                document.body.style.fontFamily = "Courier New, monospace"
+                break
+            }
 
             var timeElement = document.getElementById("timespot");
             const d = new Date();
