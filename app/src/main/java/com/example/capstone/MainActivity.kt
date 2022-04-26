@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
             changeTheme(theme as String, font as String)
         }
 
-
         setContentView(view)
 
         if (savedInstanceState == null) {
@@ -47,11 +46,14 @@ class MainActivity : AppCompatActivity() {
                 putString("$count" + "key", widget.key)
             }
             apply()
-            Log.d("test", "onStopSharedPref" + sharedPref.all.toString())
-            Log.d("test", "onStopViewModel" + viewModel.widgetList.toString())
+            viewModel.widgetList.clear()
         }
 
         super.onStop()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun changeTheme(theme: String, font: String) {

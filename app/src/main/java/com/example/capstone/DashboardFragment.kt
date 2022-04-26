@@ -37,8 +37,6 @@ class DashboardFragment : Fragment() {
         //https://stackoverflow.com/questions/17401799/how-to-know-how-many-shared-preference-in-shared-preferences-in-android/17401994
         if (widgetViewModel.isStart) {
             val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-            Log.d("test", "onCreateSharedPref" + sharedPref.all.toString())
-            Log.d("test", "onCreateViewModelBefore" + widgetViewModel.widgetList.toString())
             val sharedPrefSize = sharedPref.all.size / 3
             for (index in range(0, sharedPrefSize)) {
                 val widget = sharedPref.getString(index.toString() + "widget", null)
@@ -48,7 +46,6 @@ class DashboardFragment : Fragment() {
                     widgetViewModel.widgetList.add(Widget(widget, settings, key))
                 }
             }
-            Log.d("test", "onCreateViewModelAfter" + widgetViewModel.widgetList.toString())
             widgetViewModel.isStart = false
         }
         super.onCreate(savedInstanceState)
@@ -186,18 +183,11 @@ class DashboardFragment : Fragment() {
             "Time Widget" -> {
                 widgetViewModel.widgetList.add(Widget(widgetViewModel.timeWidget, "timeSettings.json", generateKey()))
             }
-            "Chart Widget" -> {
-                widgetViewModel.widgetList.add(Widget(widgetViewModel.chartWidget, "timeSettings.json", generateKey()))
-            }
             "Reddit Widget" -> {
                 widgetViewModel.widgetList.add(Widget(widgetViewModel.redditWidget, "redditSettings.json", generateKey()))
             }
             "Stocks Widget" -> {
                 widgetViewModel.widgetList.add(Widget(widgetViewModel.stocksWidget, "stocksSettings.json", generateKey()))
-            }
-            "MQTT Widget" -> {
-                widgetViewModel.widgetList.add(Widget(widgetViewModel.mqttWidget, "timeSettings.json", generateKey()))
-
             }
         }
     }

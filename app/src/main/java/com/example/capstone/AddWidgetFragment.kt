@@ -88,11 +88,13 @@ class AddWidgetFragment : Fragment() {
         addWidgetRecycler = AddWidgetRecycler(widgetList, widgetIconList)
         binding.recyclerView.adapter = addWidgetRecycler
 
+
+
         binding.customWidgetButton.setOnClickListener {
-            val key = generateKey()
+            val url = binding.customWidgetUrl.text
 
             val request =
-                DownloadManager.Request(Uri.parse("https://raw.githubusercontent.com/wllpwr/Dashboard/master/app/src/main/assets/stocks.html"))
+                DownloadManager.Request(Uri.parse(url.toString()))
                     .setTitle("Custom_Widget")
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
                     .setAllowedNetworkTypes(

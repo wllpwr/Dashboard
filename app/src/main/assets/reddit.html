@@ -1,6 +1,11 @@
 <html>
 <title>Reddit</title>
-
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
+</head>
 <style>
   body {
      background-color:black
@@ -29,6 +34,7 @@
   </div>
 </body>
 <script>
+
 
   function sendMessage(fileName, jsonString) {
       Android.createAndWriteToJson(fileName, jsonString);
@@ -84,10 +90,10 @@
 
     switch(settingsObj.font) {
       case "Roboto":
-        document.body.style.fontFamily = "Arial, sans-serif"
+        document.body.style.fontFamily = "Roboto, sans-serif"
         break
       case "Roboto Mono":
-        document.body.style.fontFamily = "Courier New, monospace"
+        document.body.style.fontFamily = "Roboto Mono, monospace"
         break
     }
 
