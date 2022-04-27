@@ -52,10 +52,6 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     private fun changeTheme(theme: String, font: String) {
         if (theme == "Blue" && font == "Roboto") {
             setTheme(R.style.ThemeBlueRoboto)

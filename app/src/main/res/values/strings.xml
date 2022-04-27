@@ -18,7 +18,15 @@
     <string name="theme_subtext">Change app theme</string>
     <string name="font_subtext">Change app font</string>
     <string name="apply_app_settings">Apply app settings</string>
-    <string name="custom_widget_url">Custom Widget Url</string>
-    <string name="confirm_url">Confirm Url</string>
+    <string name="custom_widget_url">Custom widget URL</string>
+    <string name="confirm_url">Confirm URL</string>
+    <string name="widget_app_theme">Base App Themes</string>
+    <string name="widget_theme_summary">Change widget theme to a base app theme</string>
+    <string name="widget_app_font">Base App Fonts</string>
+    <string name="widget_font_summary">Change widget font to a base app font</string>
+    <string name="weather_widget">Weather</string>
+    <string name="time_widget">Time</string>
+    <string name="reddit_widget">Reddit</string>
+    <string name="stocks_widget">Stocks</string>
 
 </resources>

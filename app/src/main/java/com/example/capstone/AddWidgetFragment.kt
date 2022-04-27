@@ -76,14 +76,20 @@ class AddWidgetFragment : Fragment() {
     ): View? {
         _binding = FragmentAddWidgetBinding.inflate(inflater, container, false)
         val view = binding.root
-        context?.registerReceiver(broadcastReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        context?.registerReceiver(broadcastReceiver,
+            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
         downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
-        val widgetList = arrayOf("Weather Widget", "Time Widget", "Reddit Widget", "Stocks Widget")
-        val widgetIconList = arrayOf(R.drawable.ic_baseline_wb_sunny_24, R.drawable.ic_baseline_access_time_24, R.drawable.ic_baseline_article_24, R.drawable.ic_baseline_attach_money_24)
+        val widgetList =
+            arrayOf(getString(R.string.weather_widget), getString(R.string.time_widget), getString(
+                R.string.reddit_widget), getString(R.string.stocks_widget))
+        val widgetIconList = arrayOf(R.drawable.ic_baseline_wb_sunny_24,
+            R.drawable.ic_baseline_access_time_24,
+            R.drawable.ic_baseline_article_24,
+            R.drawable.ic_baseline_attach_money_24)
 
         addWidgetRecycler = AddWidgetRecycler(widgetList, widgetIconList)
         binding.recyclerView.adapter = addWidgetRecycler

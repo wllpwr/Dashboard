@@ -73,15 +73,15 @@ class WidgetSettingsFragment : PreferenceFragmentCompat() {
 
         val themePref = ListPreference(prefContext)
         themePref.key = "theme_$key"
-        themePref.title = "Base App Themes"
-        themePref.summary = "Change widget theme to a base app theme"
+        themePref.title = getString(R.string.widget_app_theme)
+        themePref.summary = getString(R.string.widget_theme_summary)
         themePref.entries = resources.getStringArray(R.array.theme)
         themePref.entryValues = resources.getStringArray(R.array.theme)
 
         val fontPref = ListPreference(prefContext)
         fontPref.key = "font_$key"
-        fontPref.title = "Base App Fonts"
-        fontPref.summary = "Change widget font to a base app font"
+        fontPref.title = getString(R.string.widget_app_font)
+        fontPref.summary = getString(R.string.widget_font_summary)
         fontPref.entries = resources.getStringArray(R.array.font)
         fontPref.entryValues = resources.getStringArray(R.array.font)
 
