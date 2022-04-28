@@ -6,7 +6,8 @@
         app:icon="@drawable/ic_baseline_color_lens_24"
         app:key="theme"
         app:summary="@string/theme_subtext"
-        app:title="Theme" />
+        app:title="Theme"
+        app:defaultValue="Black"/>
 
     <ListPreference
         app:entries="@array/font"
@@ -14,7 +15,8 @@
         app:icon="@drawable/ic_baseline_font_download_24"
         app:key="font_style"
         app:summary="@string/font_subtext"
-        app:title="Font" />
+        app:title="Font"
+        app:defaultValue="Roboto"/>
 
     <Preference
         app:key="ConfirmButton"

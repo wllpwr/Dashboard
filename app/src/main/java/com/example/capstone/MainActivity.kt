@@ -52,10 +52,6 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     private fun changeTheme(theme: String, font: String) {
         if (theme == "Blue" && font == "Roboto") {
             setTheme(R.style.ThemeBlueRoboto)
@@ -78,7 +74,6 @@ class MainActivity : AppCompatActivity() {
         } else if (theme == "Arc" && font == "Roboto Mono") {
             setTheme(R.style.ThemeArcRobotoMono)
         }
-
     }
 
 
