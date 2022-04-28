@@ -177,17 +177,27 @@ class DashboardFragment : Fragment() {
 
     private fun addWidget(widget: String) {
         when (widget) {
-            "Weather Widget" -> {
-                widgetViewModel.widgetList.add(Widget(widgetViewModel.weatherWidget, "weatherSettings.json", generateKey()))
+            getString(R.string.weather_widget) -> {
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.weatherWidget,
+                    "weatherSettings.json",
+                    generateKey()))
             }
-            "Time Widget" -> {
-                widgetViewModel.widgetList.add(Widget(widgetViewModel.timeWidget, "timeSettings.json", generateKey()))
+            getString(R.string.time_widget) -> {
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.timeWidget,
+                    "timeSettings.json",
+                    generateKey()))
             }
-            "Reddit Widget" -> {
-                widgetViewModel.widgetList.add(Widget(widgetViewModel.redditWidget, "redditSettings.json", generateKey()))
+            getString(
+                R.string.reddit_widget),
+            -> {
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.redditWidget,
+                    "redditSettings.json",
+                    generateKey()))
             }
-            "Stocks Widget" -> {
-                widgetViewModel.widgetList.add(Widget(widgetViewModel.stocksWidget, "stocksSettings.json", generateKey()))
+            getString(R.string.stocks_widget) -> {
+                widgetViewModel.widgetList.add(Widget(widgetViewModel.stocksWidget,
+                    "stocksSettings.json",
+                    generateKey()))
             }
         }
     }
