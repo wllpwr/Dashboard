@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DashScript</string>
+    <string name="app_name">Dashy</string>
     <string name="add_button">Add widget</string>
     <string name="delete_button">Delete widget</string>
     <string name="settings_button">Settings</string>

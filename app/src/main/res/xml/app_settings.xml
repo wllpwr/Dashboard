@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:showDividers="middle|end">
     <ListPreference
+        app:defaultValue="Black"
         app:entries="@array/theme"
         app:entryValues="@array/theme"
         app:icon="@drawable/ic_baseline_color_lens_24"
         app:key="theme"
         app:summary="@string/theme_subtext"
-        app:title="Theme"
-        app:defaultValue="Black"/>
+        app:title="Theme" />
 
     <ListPreference
+        app:defaultValue="Roboto"
         app:entries="@array/font"
         app:entryValues="@array/font"
         app:icon="@drawable/ic_baseline_font_download_24"
         app:key="font_style"
         app:summary="@string/font_subtext"
-        app:title="Font"
-        app:defaultValue="Roboto"/>
+        app:title="Font" />
 
     <Preference
         app:key="ConfirmButton"
