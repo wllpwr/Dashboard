@@ -82,7 +82,7 @@
 
     switch(settingsObj.theme) {
       case "Blue":
-        document.body.style.backgroundColor = "#2c4ce3"
+        document.body.style.backgroundColor = "#64B5F6"
         document.getElementsByClassName("theme")[0].style.color = "white"
         break
       case "Black":
@@ -121,7 +121,8 @@
     .then (data => {
       data = JSON.stringify(data);
       var obj = JSON.parse(data);
-      document.getElementById("temp").textContent = obj.main.temp;
+      var temp = Math.round(obj.main.temp);
+      document.getElementById("temp").textContent = temp;
      })
   }
 

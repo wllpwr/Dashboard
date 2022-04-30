@@ -24,7 +24,7 @@
     <string name="widget_theme_summary">Change widget theme to a base app theme</string>
     <string name="widget_app_font">Base App Fonts</string>
     <string name="widget_font_summary">Change widget font to a base app font</string>
-    <string name="weather_widget">Weather</string>
+    <string name="weather_widget">Temperature</string>
     <string name="time_widget">Time</string>
     <string name="reddit_widget">Reddit</string>
     <string name="stocks_widget">Stocks</string>
